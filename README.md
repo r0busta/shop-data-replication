@@ -1,3 +1,4 @@
-# store-data-replication
- Replicate your Shopify data into a SQL database. 
- Unleash relational database super powers in your headless Shopify store.
+# shop-data-replication
+
+ Replicate your Shopify data.
+ Use a SQL database and unleash relational database super powers.
