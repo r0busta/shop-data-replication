@@ -15,7 +15,7 @@ require (
 	github.com/onsi/ginkgo v1.15.0
 	github.com/onsi/gomega v1.10.5
 	github.com/r0busta/go-shopify-graphql-model v0.0.2
-	github.com/r0busta/go-shopify-graphql/v3 v3.0.0
+	github.com/r0busta/go-shopify-graphql/v3 v3.0.1
 	github.com/r0busta/go-shopify/v3 v3.0.1
 	github.com/r0busta/graphql v1.0.0
 	github.com/rubenv/sql-migrate v0.0.0-20210215143335-f84234893558
