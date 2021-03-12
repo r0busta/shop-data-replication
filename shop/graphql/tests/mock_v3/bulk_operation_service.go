@@ -10,7 +10,7 @@ import (
 
 	gomock "github.com/golang/mock/gomock"
 	model "github.com/r0busta/go-shopify-graphql-model/graph/model"
-	graphql "github.com/r0busta/graphql"
+	null "gopkg.in/guregu/null.v4"
 )
 
 // MockBulkOperationService is a mock of BulkOperationService interface.
@@ -95,10 +95,10 @@ func (mr *MockBulkOperationServiceMockRecorder) GetCurrentBulkQueryResultURL() *
 }
 
 // PostBulkQuery mocks base method.
-func (m *MockBulkOperationService) PostBulkQuery(arg0 string) (graphql.ID, error) {
+func (m *MockBulkOperationService) PostBulkQuery(arg0 string) (null.String, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PostBulkQuery", arg0)
-	ret0, _ := ret[0].(graphql.ID)
+	ret0, _ := ret[0].(null.String)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -110,7 +110,7 @@ func (mr *MockBulkOperationServiceMockRecorder) PostBulkQuery(arg0 interface{}) 
 }
 
 // ShouldGetBulkQueryResultURL mocks base method.
-func (m *MockBulkOperationService) ShouldGetBulkQueryResultURL(arg0 graphql.ID) (string, error) {
+func (m *MockBulkOperationService) ShouldGetBulkQueryResultURL(arg0 null.String) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ShouldGetBulkQueryResultURL", arg0)
 	ret0, _ := ret[0].(string)
