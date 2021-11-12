@@ -18,6 +18,10 @@
 .vscode
 
 *.local
+
 *.pem
+
 .prod.*
+
 cloud_sql_proxy
+shop-data-replication

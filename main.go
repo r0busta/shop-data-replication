@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"os"
 
-	"github.com/r0busta/shop-data-replication/handler"
 	graphqlShop "github.com/r0busta/shop-data-replication/shop/graphql"
 	"github.com/r0busta/shop-data-replication/storage/database"
+	"github.com/r0busta/shop-data-replication/sync/handler"
 	"github.com/r0busta/shop-data-replication/sync/webhooks"
 
 	"github.com/joho/godotenv"
@@ -33,7 +33,7 @@ func main() {
 	// Init
 	shopifyClient := shopify.NewDefaultClient()
 	dbConn, err := sql.Open("mysql", driver.MySQLBuildQueryString("user", "password", "test", "localhost", 3306, "false"))
-	db := database.New(dbConn)
+	storage := database.New(dbConn)
 
 	if os.Getenv("PROVISION_DATA") != "" {
 		log.Debugln("Bootstraping the storage with initial shop data")
@@ -43,7 +43,7 @@ func main() {
 			log.Fatalln(err)
 		}
 
-		err = db.SaveProducts(products)
+		err = storage.SaveProducts(products)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -52,21 +52,22 @@ func main() {
 
 	if os.Getenv("RUN_SYNC_SERVICE") != "" {
 		// Sync service
-		h := handler.NewDefaultHandler(db)
 		port := os.Getenv("PORT")
 		if port == "" {
 			port = "8080"
 		}
 
-		s := webhooks.New(h, webhooks.WithPort(port),
-			webhooks.WithShopifyApiSecret(os.Getenv("STORE_API_SECRET")),
+		h := handler.NewDefaultHandler(storage)
+
+		syncService := webhooks.New(h, webhooks.WithPort(port),
+			webhooks.WithShopifyAPISecret(os.Getenv("STORE_API_SECRET")),
 		)
 
-		err = s.(*webhooks.Service).ProvisionSubscriptions(shopifyClient.GraphQLClient(), os.Getenv("STORE_WEBHOOKS_CALLBACK_HOST"))
+		err = syncService.ProvisionSubscriptions(shopifyClient.GraphQLClient(), os.Getenv("STORE_WEBHOOKS_CALLBACK_URL"))
 		if err != nil {
 			log.Fatalln(err)
 		}
-		log.Debugln("Starting sync service")
-		log.Fatalln(s.Run())
+		log.Debugln("Starting the sync service")
+		log.Fatalln(syncService.Run())
 	}
 }

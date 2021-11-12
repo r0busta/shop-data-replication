@@ -12,6 +12,7 @@ CREATE TABLE product (
     published_scope VARCHAR(50) NOT NULL,
     status TINYINT(2) NOT NULL,
     template_suffix VARCHAR(255)
+    PRIMARY KEY (id)
 );
 -- +migrate Down
 DROP TABLE product;

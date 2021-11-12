@@ -1,4 +1,4 @@
 development:
     dialect: mysql
-    datasource: user:password@/test?parseTime=true
+    datasource: user:password@/shop?parseTime=true
     dir: migrations/mysql

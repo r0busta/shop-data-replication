@@ -17,7 +17,7 @@ var shopifyTopics = map[Topic]shopify.WebhookSubscriptionTopic{
 	TopicProductsDelete: shopify.WebhookSubscriptionTopicProductsDelete,
 }
 
-const LIST_WEBHOOKS = `
+const listWebhooks = `
 	query webhookSubscriptions($first: Int, $callbackUrl: URL, $format: WebhookSubscriptionFormat, $topics: [WebhookSubscriptionTopic!]) {
 		webhookSubscriptions(first: $first, callbackUrl: $callbackUrl, format: $format, topics: $topics) {
 			edges {
@@ -36,6 +36,7 @@ const LIST_WEBHOOKS = `
 	}
 `
 
+// Subscriptions collects the subscriptions to Shopify webhooks.
 type Subscriptions struct {
 	shopClient      *graphql.Client
 	callbackBaseURL string
@@ -47,14 +48,17 @@ func (s *Subscriptions) ProvisionSubscriptions(topics []Topic) error {
 	}
 
 	format := shopify.WebhookSubscriptionFormatJSON
+
 	for _, topic := range topics {
 		shopifyTopic := shopifyTopics[topic]
 		path := topicHandlerPaths[topic]
 		callbackURL := fmt.Sprintf("%s%s%s", s.callbackBaseURL, routeGroupPrefix, path)
+
 		exists, err := s.isSubscribed(callbackURL, shopifyTopic, format)
 		if err != nil {
 			return fmt.Errorf("error: %s", err)
 		}
+
 		if exists {
 			continue
 		}
@@ -63,8 +67,10 @@ func (s *Subscriptions) ProvisionSubscriptions(topics []Topic) error {
 		if err != nil {
 			return fmt.Errorf("error: %s", err)
 		}
+
 		log.Debugf("Subscribed to %s with the callback URL at %s", shopifyTopic, callbackURL)
 	}
+
 	return nil
 }
 
@@ -79,6 +85,7 @@ func (s *Subscriptions) UnsubscribeFromAll() error {
 	}
 
 	log.Tracef("Removing %d webhook subscriptions", len(subscriptions.Edges))
+
 	for _, sub := range subscriptions.Edges {
 		err := s.unsubscribe(sub.Node.ID.String)
 		if err != nil {
@@ -93,10 +100,12 @@ func (s *Subscriptions) listAllSubscriptions(callbackBaseURL string) (*shopify.W
 	vars := map[string]interface{}{
 		"first": 50,
 	}
+
 	var out struct {
 		WebhookSubscriptions *shopify.WebhookSubscriptionConnection `json:"webhookSubscriptions"`
 	}
-	err := s.shopClient.QueryString(context.Background(), LIST_WEBHOOKS, vars, &out)
+
+	err := s.shopClient.QueryString(context.Background(), listWebhooks, vars, &out)
 	if err != nil {
 		return nil, fmt.Errorf("error getting callbackUrl=%s webhook subscriptions: %s", callbackBaseURL, err)
 	}
@@ -104,17 +113,19 @@ func (s *Subscriptions) listAllSubscriptions(callbackBaseURL string) (*shopify.W
 	return out.WebhookSubscriptions, nil
 }
 
-func (s *Subscriptions) isSubscribed(callbackUrl string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) (bool, error) {
+func (s *Subscriptions) isSubscribed(callbackURL string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) (bool, error) {
 	vars := map[string]interface{}{
 		"first":       50,
 		"topics":      []shopify.WebhookSubscriptionTopic{topic},
 		"format":      format,
-		"callbackUrl": callbackUrl,
+		"callbackUrl": callbackURL,
 	}
+
 	var out struct {
 		WebhookSubscriptions *shopify.WebhookSubscriptionConnection `json:"webhookSubscriptions"`
 	}
-	err := s.shopClient.QueryString(context.Background(), LIST_WEBHOOKS, vars, &out)
+
+	err := s.shopClient.QueryString(context.Background(), listWebhooks, vars, &out)
 	if err != nil {
 		return false, fmt.Errorf("error getting %s webhook subscriptions: %s", topic, err)
 	}
@@ -122,8 +133,8 @@ func (s *Subscriptions) isSubscribed(callbackUrl string, topic shopify.WebhookSu
 	return len(out.WebhookSubscriptions.Edges) != 0, nil
 }
 
-func (s *Subscriptions) subscribe(callbackUrl string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) error {
-	u := null.StringFrom(callbackUrl)
+func (s *Subscriptions) subscribe(callbackURL string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) error {
+	u := null.StringFrom(callbackURL)
 	webhookInput := shopify.WebhookSubscriptionInput{
 		CallbackURL: &u,
 		Format:      &format,
@@ -137,6 +148,7 @@ func (s *Subscriptions) subscribe(callbackUrl string, topic shopify.WebhookSubsc
 	var webhookSubscriptionCreate struct {
 		WebhookSubscriptionCreatePayload shopify.WebhookSubscriptionCreatePayload `graphql:"webhookSubscriptionCreate(topic: $topic, webhookSubscription: $input)" json:"webhookSubscriptionCreate"`
 	}
+
 	err := s.shopClient.Mutate(context.Background(), &webhookSubscriptionCreate, vars)
 	if err != nil {
 		return fmt.Errorf("error creating %s webhook: %s", topic, err)
@@ -158,6 +170,7 @@ func (s *Subscriptions) unsubscribe(id string) error {
 	var webhookSubscriptionDelete struct {
 		WebhookSubscriptionDeletePayload shopify.WebhookSubscriptionDeletePayload `graphql:"webhookSubscriptionDelete(id: $id)" json:"webhookSubscriptionDelete"`
 	}
+
 	err := s.shopClient.Mutate(context.Background(), &webhookSubscriptionDelete, vars)
 	if err != nil {
 		return fmt.Errorf("error creating %s webhook: %s", id, err)

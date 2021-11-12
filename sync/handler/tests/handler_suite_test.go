@@ -1,13 +1,11 @@
-package tests
+package tests_test
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-testfixtures/testfixtures/v3"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	migrate "github.com/rubenv/sql-migrate"
@@ -16,27 +14,23 @@ import (
 	"gopkg.in/khaiql/dbcleaner.v2/engine"
 )
 
-var fixtures *testfixtures.Loader
 var cleaner dbcleaner.DbCleaner
 
 var _ = BeforeSuite(func() {
-	fixtures, cleaner = prepareDatabase()
+	cleaner = prepareDatabase()
 })
 
 var _ = BeforeEach(func() {
 	cleaner.Clean("product")
-	err := fixtures.Load()
-	if err != nil {
-		log.Fatalf("error creating fixtures: %s", err)
-	}
 })
 
-func prepareDatabase() (*testfixtures.Loader, dbcleaner.DbCleaner) {
+func prepareDatabase() dbcleaner.DbCleaner {
 	migrations := &migrate.FileMigrationSource{
-		Dir: "../../migrations/mysql",
+		Dir: "../../../migrations/mysql",
 	}
 
 	queryString := driver.MySQLBuildQueryString("user", "password", "test", "localhost", 3306, "false")
+
 	db, err := sql.Open("mysql", queryString)
 	if err != nil {
 		log.Fatalf("error opening database: %s", err)
@@ -46,26 +40,13 @@ func prepareDatabase() (*testfixtures.Loader, dbcleaner.DbCleaner) {
 	if err != nil {
 		log.Fatalf("error applying migrations: %s", err)
 	}
-	fmt.Printf("Applied %d migrations!\n", n)
 
-	fixtures, err := testfixtures.New(
-		testfixtures.Database(db),
-		testfixtures.Dialect("mysql"),
-		testfixtures.Directory("fixtures"),
-	)
-	if err != nil {
-		log.Fatalf("error creating fixtures: %s", err)
-	}
-
-	err = fixtures.Load()
-	if err != nil {
-		log.Fatalf("error loading fixtures: %s", err)
-	}
+	log.Printf("Applied %d migrations!\n", n)
 
 	cleaner := dbcleaner.New()
 	cleaner.SetEngine(engine.NewMySQLEngine(queryString))
 
-	return fixtures, cleaner
+	return cleaner
 }
 
 func TestHandler(t *testing.T) {

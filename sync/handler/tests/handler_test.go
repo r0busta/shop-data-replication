@@ -1,16 +1,15 @@
-package tests
+package tests_test
 
 import (
 	"context"
 	"database/sql"
 
-	"github.com/r0busta/shop-data-replication/handler"
-	"github.com/r0busta/shop-data-replication/models"
-	"github.com/r0busta/shop-data-replication/storage/database"
-
 	_ "github.com/go-sql-driver/mysql"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/r0busta/shop-data-replication/models"
+	"github.com/r0busta/shop-data-replication/storage/database"
+	"github.com/r0busta/shop-data-replication/sync/handler"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql/driver"
 )

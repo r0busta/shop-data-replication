@@ -1,25 +1,23 @@
-package tests
+package tests_test
 
+//go:generate mockgen -destination mock_v3/bulk_operation_service.go github.com/r0busta/go-shopify-graphql/v3 BulkOperationService
 import (
 	"testing"
-
-	"github.com/r0busta/shop-data-replication/shop"
-	graphqlShop "github.com/r0busta/shop-data-replication/shop/graphql"
-	"github.com/r0busta/shop-data-replication/shop/graphql/tests/mock_v3"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	shopifyGraphql "github.com/r0busta/go-shopify-graphql/v3"
+	"github.com/r0busta/shop-data-replication/shop"
+	graphqlShop "github.com/r0busta/shop-data-replication/shop/graphql"
+	"github.com/r0busta/shop-data-replication/shop/graphql/tests/mock_v3"
 )
 
-const (
-	storeApi = "https://shop.myshopify.com/admin/api/2021-04/graphql.json"
+var (
+	client                   shop.Client
+	mockBulkOperationService *mock_v3.MockBulkOperationService
 )
-
-var client shop.Client
-var mockBulkOperationService *mock_v3.MockBulkOperationService
 
 func TestGraphqlClient(t *testing.T) {
 	client = newMockGraphqlClient(t)
@@ -37,5 +35,6 @@ func newMockGraphqlClient(t *testing.T) shop.Client {
 	shopifyClient := &shopifyGraphql.Client{
 		BulkOperation: mockBulkOperationService,
 	}
+
 	return graphqlShop.New(shopifyClient)
 }
