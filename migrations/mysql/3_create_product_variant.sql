@@ -1,24 +1,24 @@
 -- +migrate Up
-CREATE TABLE product_variant (
-    id BIGINT NOT NULL PRIMARY KEY,
-    product_id BIGINT NOT NULL,
-    barcode VARCHAR(255),
-    compare_at_price DECIMAL(13, 4),
-    fulfillment_service VARCHAR(255),
-    grams DOUBLE,
-    inventory_management VARCHAR(50) NOT NULL,
-    inventory_policy VARCHAR(50) NOT NULL,
-    inventory_quantity INT NOT NULL,
-    position SMALLINT NOT NULL,
-    price DECIMAL(13, 4) NOT NULL,
-    sku VARCHAR(255),
-    taxable TINYINT(1) NOT NULL,
-    title VARCHAR(255),
-    weight DOUBLE,
-    weight_unit VARCHAR(4) NOT NULL,
-    created_at DATETIME,
-    updated_at DATETIME,
-    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
+create table product_variant (
+    id bigint not null primary key,
+    product_id bigint not null,
+    barcode varchar(255),
+    compare_at_price decimal(13, 4),
+    fulfillment_service varchar(255),
+    grams double,
+    inventory_management varchar(50) not null,
+    inventory_policy varchar(50) not null,
+    inventory_quantity int not null,
+    position smallint not null,
+    price decimal(13, 4) not null,
+    sku varchar(255),
+    taxable tinyint(1) not null,
+    title varchar(255),
+    weight double,
+    weight_unit varchar(4) not null,
+    created_at datetime,
+    updated_at datetime,
+    foreign key (product_id) references product(id) on delete cascade
 );
 -- +migrate Down
-DROP TABLE product_variant;
+drop table product_variant;

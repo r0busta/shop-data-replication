@@ -1,17 +1,17 @@
 -- +migrate Up
-CREATE TABLE product (
-    id BIGINT NOT NULL PRIMARY KEY,
-    body_html TEXT,
-    title VARCHAR(255),
-    handle VARCHAR(255) NOT NULL,
-    product_type VARCHAR(255),
-    vendor VARCHAR(255),
-    created_at DATETIME,
-    updated_at DATETIME,
-    published_at DATETIME,
-    published_scope VARCHAR(50) NOT NULL,
-    status TINYINT(2) NOT NULL,
-    template_suffix VARCHAR(255)
+create table product (
+    id bigint not null primary key,
+    body_html text,
+    title varchar(255),
+    handle varchar(255) not null,
+    product_type varchar(255),
+    vendor varchar(255),
+    created_at datetime,
+    updated_at datetime,
+    published_at datetime,
+    published_scope varchar(50) not null,
+    status tinyint(2) not null,
+    template_suffix varchar(255)
 );
 -- +migrate Down
-DROP TABLE product;
+drop table product;

@@ -1,30 +1,30 @@
 -- +migrate Up
-CREATE TABLE inventory_item (
-    id BIGINT NOT NULL PRIMARY KEY,
-    cost DECIMAL(13, 4),
-    country_code_of_origin VARCHAR(2),
-    created_at DATETIME,
-    province_code_of_origin VARCHAR(10),
-    requires_shipping TINYINT(1) NOT NULL,
-    sku VARCHAR(255),
-    tracked TINYINT(1) NOT NULL,
-    updated_at DATETIME
+create table inventory_item (
+    id bigint not null primary key,
+    cost decimal(13, 4),
+    country_code_of_origin varchar(2),
+    created_at datetime,
+    province_code_of_origin varchar(10),
+    requires_shipping tinyint(1) not null,
+    sku varchar(255),
+    tracked tinyint(1) not null,
+    updated_at datetime
 );
-CREATE TABLE inventory_level (
-    inventory_item_id BIGINT NOT NULL,
-    location_id BIGINT NOT NULL,
-    available INT NOT NULL,
-    updated_at DATETIME,
-    FOREIGN KEY (inventory_item_id) REFERENCES inventory_item(id) ON DELETE CASCADE,
-    FOREIGN KEY (location_id) REFERENCES location(id) ON DELETE CASCADE,
-    CONSTRAINT PK_inventory_level PRIMARY KEY (inventory_item_id, location_id)
+create table inventory_level (
+    inventory_item_id bigint not null,
+    location_id bigint not null,
+    available int not null,
+    updated_at datetime,
+    foreign key (inventory_item_id) references inventory_item(id) on delete cascade,
+    foreign key (location_id) references location(id) on delete cascade,
+    constraint pk_inventory_level primary key (inventory_item_id, location_id)
 );
-ALTER TABLE product_variant
-ADD COLUMN inventory_item_id BIGINT
-AFTER product_id,
-    ADD FOREIGN KEY (inventory_item_id) REFERENCES image(id);
+alter table product_variant
+add column inventory_item_id bigint
+after product_id,
+    add foreign key (inventory_item_id) references image(id);
 -- +migrate Down
-ALTER TABLE product_variant DROP FOREIGN KEY product_variant_ibfk_6,
-    DROP COLUMN inventory_item_id;
-DROP TABLE inventory_level;
-DROP TABLE inventory_item;
+alter table product_variant drop foreign key product_variant_ibfk_6,
+    drop column inventory_item_id;
+drop table inventory_level;
+drop table inventory_item;

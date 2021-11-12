@@ -1,17 +1,17 @@
 -- +migrate Up
-CREATE TABLE location(
-    id BIGINT NOT NULL PRIMARY KEY,
-    active TINYINT(1) NOT NULL,
-    address1 VARCHAR(255),
-    address2 VARCHAR(255),
-    city VARCHAR(255),
-    created_at DATETIME,
-    name VARCHAR(255) NOT NULL,
-    phone VARCHAR(100),
-    updated_at DATETIME,
-    zip VARCHAR(100),
-    country_code VARCHAR(2),
-    province_code VARCHAR(10)
+create table location(
+    id bigint not null primary key,
+    active tinyint(1) not null,
+    address1 varchar(255),
+    address2 varchar(255),
+    city varchar(255),
+    created_at datetime,
+    name varchar(255) not null,
+    phone varchar(100),
+    updated_at datetime,
+    zip varchar(100),
+    country_code varchar(2),
+    province_code varchar(10)
 );
 -- +migrate Down
-DROP TABLE location;
+drop table location;

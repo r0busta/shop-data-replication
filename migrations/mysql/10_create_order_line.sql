@@ -1,20 +1,20 @@
 -- +migrate Up
-CREATE TABLE order_line (
-    id BIGINT NOT NULL PRIMARY KEY,
-    order_id BIGINT NOT NULL,
-    product_id BIGINT,
-    variant_id BIGINT,
-    sku VARCHAR(255),
-    name VARCHAR(255),
-    title VARCHAR(255),
-    variant_title VARCHAR(255),
-    vendor VARCHAR(255),
-    quantity INT NOT NULL,
-    price DECIMAL(13, 4) NOT NULL,
-    total_discount DECIMAL(13, 4) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES customer_order(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE SET NULL,
-    FOREIGN KEY (variant_id) REFERENCES product_variant(id) ON DELETE SET NULL
+create table order_line (
+    id bigint not null primary key,
+    order_id bigint not null,
+    product_id bigint,
+    variant_id bigint,
+    sku varchar(255),
+    name varchar(255),
+    title varchar(255),
+    variant_title varchar(255),
+    vendor varchar(255),
+    quantity int not null,
+    price decimal(13, 4) not null,
+    total_discount decimal(13, 4) not null,
+    foreign key (order_id) references customer_order(id) on delete cascade,
+    foreign key (product_id) references product(id) on delete set null,
+    foreign key (variant_id) references product_variant(id) on delete set null
 );
 -- +migrate Down
-DROP TABLE order_line;
+drop table order_line;
