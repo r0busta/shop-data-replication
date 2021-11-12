@@ -8,7 +8,7 @@ CREATE TABLE product (
     created_at DATETIME,
     updated_at DATETIME,
     status INT NOT NULL,
-    PRIMARY KEY (id)      
+    PRIMARY KEY (id)
 );
 -- +migrate Down
 DROP TABLE product;

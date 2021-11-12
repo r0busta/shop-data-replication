@@ -4,19 +4,14 @@ package tests_test
 import (
 	"testing"
 
-	"github.com/r0busta/shop-data-replication/shop"
-	graphqlShop "github.com/r0busta/shop-data-replication/shop/graphql"
-	"github.com/r0busta/shop-data-replication/shop/graphql/tests/mock_v3"
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	shopifyGraphql "github.com/r0busta/go-shopify-graphql/v3"
-)
-
-const (
-	storeApi = "https://shop.myshopify.com/admin/api/2021-04/graphql.json"
+	"github.com/r0busta/shop-data-replication/shop"
+	graphqlShop "github.com/r0busta/shop-data-replication/shop/graphql"
+	"github.com/r0busta/shop-data-replication/shop/graphql/tests/mock_v3"
 )
 
 var (
@@ -40,5 +35,6 @@ func newMockGraphqlClient(t *testing.T) shop.Client {
 	shopifyClient := &shopifyGraphql.Client{
 		BulkOperation: mockBulkOperationService,
 	}
+
 	return graphqlShop.New(shopifyClient)
 }

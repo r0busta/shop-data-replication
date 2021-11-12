@@ -58,10 +58,10 @@ func main() {
 	}
 
 	s := webhooks.New(h, webhooks.WithPort(port),
-		webhooks.WithShopifyApiSecret(os.Getenv("STORE_API_SECRET")),
+		webhooks.WithShopifyAPISecret(os.Getenv("STORE_API_SECRET")),
 	)
 
-	err = s.(*webhooks.Service).ProvisionSubscriptions(shopifyClient.GraphQLClient(), os.Getenv("STORE_WEBHOOKS_CALLBACK_URL"))
+	err = s.ProvisionSubscriptions(shopifyClient.GraphQLClient(), os.Getenv("STORE_WEBHOOKS_CALLBACK_URL"))
 	if err != nil {
 		log.Fatalln(err)
 	}

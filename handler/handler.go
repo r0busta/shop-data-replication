@@ -17,7 +17,7 @@ type DefaultHandler struct {
 	storage storage.Storage
 }
 
-func NewDefaultHandler(storage storage.Storage) Handler {
+func NewDefaultHandler(storage storage.Storage) *DefaultHandler {
 	return &DefaultHandler{
 		storage: storage,
 	}
@@ -25,7 +25,6 @@ func NewDefaultHandler(storage storage.Storage) Handler {
 
 func (h *DefaultHandler) OnProductCreate(p *models.Product) error {
 	return h.storage.SaveProduct(p)
-
 }
 
 func (h *DefaultHandler) OnProductUpdate(p *models.Product) error {

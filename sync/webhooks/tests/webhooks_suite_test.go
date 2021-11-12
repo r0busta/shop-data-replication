@@ -2,7 +2,6 @@ package tests_test
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"testing"
 
@@ -31,6 +30,7 @@ func prepareDatabase() dbcleaner.DbCleaner {
 	}
 
 	queryString := driver.MySQLBuildQueryString("user", "password", "test", "localhost", 3306, "false")
+
 	db, err := sql.Open("mysql", queryString)
 	if err != nil {
 		log.Fatalf("error opening database: %s", err)
@@ -40,7 +40,8 @@ func prepareDatabase() dbcleaner.DbCleaner {
 	if err != nil {
 		log.Fatalf("error applying migrations: %s", err)
 	}
-	fmt.Printf("Applied %d migrations!\n", n)
+
+	log.Printf("Applied %d migrations!\n", n)
 
 	cleaner := dbcleaner.New()
 	cleaner.SetEngine(engine.NewMySQLEngine(queryString))

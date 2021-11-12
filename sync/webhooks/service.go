@@ -9,13 +9,11 @@ import (
 	"io"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
+	goshopify "github.com/r0busta/go-shopify/v3"
 	"github.com/r0busta/graphql"
 	"github.com/r0busta/shop-data-replication/handler"
 	"github.com/r0busta/shop-data-replication/models"
-	"github.com/r0busta/shop-data-replication/sync"
-
-	"github.com/gin-gonic/gin"
-	goshopify "github.com/r0busta/go-shopify/v3"
 	log "github.com/sirupsen/logrus"
 	sqlNull "github.com/volatiletech/null/v8"
 )
@@ -36,16 +34,17 @@ var topicHandlerPaths = map[Topic]string{
 	TopicProductsDelete: "/on/products/delete",
 }
 
+// Shopify webhook handler. Syncs updates received via webhooks to the database.
 type Service struct {
 	handler handler.Handler
 
 	port             string
-	shopifyApiSecret string
+	shopifyAPISecret string
 
 	verifyRequests bool
 }
 
-func New(h handler.Handler, opts ...Option) sync.Service {
+func New(h handler.Handler, opts ...Option) *Service {
 	s := &Service{
 		handler:        h,
 		verifyRequests: true,
@@ -66,9 +65,9 @@ func WithPort(v string) Option {
 	}
 }
 
-func WithShopifyApiSecret(v string) Option {
+func WithShopifyAPISecret(v string) Option {
 	return func(s *Service) {
-		s.shopifyApiSecret = v
+		s.shopifyAPISecret = v
 	}
 }
 
@@ -105,6 +104,7 @@ func (s *Service) ProvisionSubscriptions(shopClient *graphql.Client, callbackBas
 		shopClient:      shopClient,
 		callbackBaseURL: callbackBaseURL,
 	}
+
 	return sub.ProvisionSubscriptions([]Topic{
 		TopicProductsCreate,
 		TopicProductsUpdate,
@@ -115,22 +115,25 @@ func (s *Service) ProvisionSubscriptions(shopClient *graphql.Client, callbackBas
 func (s *Service) Run() error {
 	r := s.SetupRouter()
 	port := fmt.Sprintf(":%s", s.port)
+
 	return r.Run(port)
 }
 
 func (s *Service) onProductCreate(c *gin.Context) {
 	product := &goshopify.Product{}
+
 	err := c.ShouldBindJSON(product)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
+
 		return
 	}
 
 	err = s.handler.OnProductCreate(convertProductRequest(product))
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
-		return
 
+		return
 	}
 
 	c.JSON(http.StatusOK, nil)
@@ -141,12 +144,14 @@ func (s *Service) onProductUpdate(c *gin.Context) {
 	err := c.ShouldBindJSON(product)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
+
 		return
 	}
 
 	err = s.handler.OnProductUpdate(convertProductRequest(product))
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
+
 		return
 	}
 
@@ -159,7 +164,6 @@ func (s *Service) onProductDelete(c *gin.Context) {
 
 func (s *Service) notFound(c *gin.Context) {
 	c.String(http.StatusNotFound, http.StatusText(http.StatusNotFound))
-	return
 }
 
 func convertProductRequest(product *goshopify.Product) *models.Product {
@@ -169,8 +173,8 @@ func convertProductRequest(product *goshopify.Product) *models.Product {
 	}
 }
 
-func (h *Service) VerificationRequired(c *gin.Context) {
-	if err := VerifyRequest(c.Request, h.shopifyApiSecret); err != nil {
+func (s *Service) VerificationRequired(c *gin.Context) {
+	if err := VerifyRequest(c.Request, s.shopifyAPISecret); err != nil {
 		c.AbortWithError(http.StatusUnauthorized, err)
 	}
 }
@@ -184,7 +188,7 @@ func VerifyRequest(req *http.Request, secret string) error {
 	mac := hmac.New(sha256.New, []byte(secret))
 	body, err := io.ReadAll(req.Body)
 	if err != nil {
-		return fmt.Errorf("error reading request body: %s", err)
+		return fmt.Errorf("error reading request body: %w", err)
 	}
 	req.Body = io.NopCloser(bytes.NewBuffer(body))
 

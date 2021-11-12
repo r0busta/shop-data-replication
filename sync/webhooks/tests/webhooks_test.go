@@ -34,7 +34,7 @@ var _ = Describe("POST /on/products/create", func() {
 
 		h := handler.NewDefaultHandler(db)
 		s := webhooks.New(h, webhooks.WithVerifyRequests(false))
-		router := s.(*webhooks.Service).SetupRouter()
+		router := s.SetupRouter()
 
 		body, err := json.Marshal(product)
 		Expect(err).To(BeNil())
