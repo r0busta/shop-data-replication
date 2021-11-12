@@ -26,7 +26,7 @@ var _ = BeforeEach(func() {
 
 func prepareDatabase() dbcleaner.DbCleaner {
 	migrations := &migrate.FileMigrationSource{
-		Dir: "../../migrations/mysql",
+		Dir: "../../../migrations/mysql",
 	}
 
 	queryString := driver.MySQLBuildQueryString("user", "password", "test", "localhost", 3306, "false")

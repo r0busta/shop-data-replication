@@ -7,6 +7,8 @@ import (
 	"github.com/r0busta/shop-data-replication/storage"
 )
 
+// DefaultHandler is the default handler for the replication. It is used to
+// store the data in a local storage.
 type Handler interface {
 	OnProductCreate(*models.Product) error
 	OnProductUpdate(*models.Product) error

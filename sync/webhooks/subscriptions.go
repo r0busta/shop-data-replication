@@ -36,6 +36,7 @@ const listWebhooks = `
 	}
 `
 
+// Subscriptions collects the subscriptions to Shopify webhooks.
 type Subscriptions struct {
 	shopClient      *graphql.Client
 	callbackBaseURL string
@@ -112,12 +113,12 @@ func (s *Subscriptions) listAllSubscriptions(callbackBaseURL string) (*shopify.W
 	return out.WebhookSubscriptions, nil
 }
 
-func (s *Subscriptions) isSubscribed(callbackUrl string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) (bool, error) {
+func (s *Subscriptions) isSubscribed(callbackURL string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) (bool, error) {
 	vars := map[string]interface{}{
 		"first":       50,
 		"topics":      []shopify.WebhookSubscriptionTopic{topic},
 		"format":      format,
-		"callbackUrl": callbackUrl,
+		"callbackUrl": callbackURL,
 	}
 
 	var out struct {
@@ -132,8 +133,8 @@ func (s *Subscriptions) isSubscribed(callbackUrl string, topic shopify.WebhookSu
 	return len(out.WebhookSubscriptions.Edges) != 0, nil
 }
 
-func (s *Subscriptions) subscribe(callbackUrl string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) error {
-	u := null.StringFrom(callbackUrl)
+func (s *Subscriptions) subscribe(callbackURL string, topic shopify.WebhookSubscriptionTopic, format shopify.WebhookSubscriptionFormat) error {
+	u := null.StringFrom(callbackURL)
 	webhookInput := shopify.WebhookSubscriptionInput{
 		CallbackURL: &u,
 		Format:      &format,

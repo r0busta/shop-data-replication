@@ -1,14 +1,13 @@
-package graphqlShop
+package graphqlshop
 
 import (
 	"fmt"
 	"strconv"
 
-	"github.com/r0busta/shop-data-replication/models"
-	"github.com/volatiletech/null/v8"
-
 	shopify "github.com/r0busta/go-shopify-graphql-model/graph/model"
 	graphql "github.com/r0busta/go-shopify-graphql/v3"
+	"github.com/r0busta/shop-data-replication/models"
+	"github.com/volatiletech/null/v8"
 )
 
 type Client struct {

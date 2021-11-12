@@ -12,8 +12,8 @@ import (
 	"github.com/gin-gonic/gin"
 	goshopify "github.com/r0busta/go-shopify/v3"
 	"github.com/r0busta/graphql"
-	"github.com/r0busta/shop-data-replication/handler"
 	"github.com/r0busta/shop-data-replication/models"
+	"github.com/r0busta/shop-data-replication/sync/handler"
 	log "github.com/sirupsen/logrus"
 	sqlNull "github.com/volatiletech/null/v8"
 )
