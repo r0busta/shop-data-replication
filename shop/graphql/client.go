@@ -27,8 +27,51 @@ const LIST_ALL_PRODUCTS = `
 	products{
 		edges{
 			node{
+				id
 				legacyResourceId
+				vendor
 				title
+				descriptionHtml
+				totalInventory
+				priceRangeV2 {
+					minVariantPrice {
+						amount
+						currencyCode
+					}
+					maxVariantPrice {
+						amount
+						currencyCode
+					}
+				}
+				images(first: 20) {
+					edges {
+						node {
+							transformedSrc
+						}
+					}
+				}
+				hasOnlyDefaultVariant
+				options {
+					name
+					values
+					position
+				}
+				variants(first: 20) {
+					edges {
+						node {
+							id
+							legacyResourceId
+							price
+							compareAtPrice
+							inventoryQuantity
+							availableForSale
+							selectedOptions {
+								name
+								value
+							}
+						}
+					}
+				}
 			}
 		}
 	}

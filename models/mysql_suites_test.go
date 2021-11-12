@@ -6,7 +6,29 @@ package models
 import "testing"
 
 func TestUpsert(t *testing.T) {
+	t.Run("Collections", testCollectionsUpsert)
+
 	t.Run("GorpMigrations", testGorpMigrationsUpsert)
 
+	t.Run("Images", testImagesUpsert)
+
+	t.Run("InventoryItems", testInventoryItemsUpsert)
+
+	t.Run("InventoryLevels", testInventoryLevelsUpsert)
+
+	t.Run("Locations", testLocationsUpsert)
+
 	t.Run("Products", testProductsUpsert)
+
+	t.Run("ProductImages", testProductImagesUpsert)
+
+	t.Run("ProductOptions", testProductOptionsUpsert)
+
+	t.Run("ProductOptionValues", testProductOptionValuesUpsert)
+
+	t.Run("ProductTags", testProductTagsUpsert)
+
+	t.Run("ProductVariants", testProductVariantsUpsert)
+
+	t.Run("Tags", testTagsUpsert)
 }

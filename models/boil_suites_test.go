@@ -12,90 +12,295 @@ import "testing"
 // It does NOT run each operation group in parallel.
 // Separating the tests thusly grants avoidance of Postgres deadlocks.
 func TestParent(t *testing.T) {
+	t.Run("Collections", testCollections)
 	t.Run("GorpMigrations", testGorpMigrations)
+	t.Run("Images", testImages)
+	t.Run("InventoryItems", testInventoryItems)
+	t.Run("InventoryLevels", testInventoryLevels)
+	t.Run("Locations", testLocations)
 	t.Run("Products", testProducts)
+	t.Run("ProductImages", testProductImages)
+	t.Run("ProductOptions", testProductOptions)
+	t.Run("ProductOptionValues", testProductOptionValues)
+	t.Run("ProductTags", testProductTags)
+	t.Run("ProductVariants", testProductVariants)
+	t.Run("Tags", testTags)
 }
 
 func TestDelete(t *testing.T) {
+	t.Run("Collections", testCollectionsDelete)
 	t.Run("GorpMigrations", testGorpMigrationsDelete)
+	t.Run("Images", testImagesDelete)
+	t.Run("InventoryItems", testInventoryItemsDelete)
+	t.Run("InventoryLevels", testInventoryLevelsDelete)
+	t.Run("Locations", testLocationsDelete)
 	t.Run("Products", testProductsDelete)
+	t.Run("ProductImages", testProductImagesDelete)
+	t.Run("ProductOptions", testProductOptionsDelete)
+	t.Run("ProductOptionValues", testProductOptionValuesDelete)
+	t.Run("ProductTags", testProductTagsDelete)
+	t.Run("ProductVariants", testProductVariantsDelete)
+	t.Run("Tags", testTagsDelete)
 }
 
 func TestQueryDeleteAll(t *testing.T) {
+	t.Run("Collections", testCollectionsQueryDeleteAll)
 	t.Run("GorpMigrations", testGorpMigrationsQueryDeleteAll)
+	t.Run("Images", testImagesQueryDeleteAll)
+	t.Run("InventoryItems", testInventoryItemsQueryDeleteAll)
+	t.Run("InventoryLevels", testInventoryLevelsQueryDeleteAll)
+	t.Run("Locations", testLocationsQueryDeleteAll)
 	t.Run("Products", testProductsQueryDeleteAll)
+	t.Run("ProductImages", testProductImagesQueryDeleteAll)
+	t.Run("ProductOptions", testProductOptionsQueryDeleteAll)
+	t.Run("ProductOptionValues", testProductOptionValuesQueryDeleteAll)
+	t.Run("ProductTags", testProductTagsQueryDeleteAll)
+	t.Run("ProductVariants", testProductVariantsQueryDeleteAll)
+	t.Run("Tags", testTagsQueryDeleteAll)
 }
 
 func TestSliceDeleteAll(t *testing.T) {
+	t.Run("Collections", testCollectionsSliceDeleteAll)
 	t.Run("GorpMigrations", testGorpMigrationsSliceDeleteAll)
+	t.Run("Images", testImagesSliceDeleteAll)
+	t.Run("InventoryItems", testInventoryItemsSliceDeleteAll)
+	t.Run("InventoryLevels", testInventoryLevelsSliceDeleteAll)
+	t.Run("Locations", testLocationsSliceDeleteAll)
 	t.Run("Products", testProductsSliceDeleteAll)
+	t.Run("ProductImages", testProductImagesSliceDeleteAll)
+	t.Run("ProductOptions", testProductOptionsSliceDeleteAll)
+	t.Run("ProductOptionValues", testProductOptionValuesSliceDeleteAll)
+	t.Run("ProductTags", testProductTagsSliceDeleteAll)
+	t.Run("ProductVariants", testProductVariantsSliceDeleteAll)
+	t.Run("Tags", testTagsSliceDeleteAll)
 }
 
 func TestExists(t *testing.T) {
+	t.Run("Collections", testCollectionsExists)
 	t.Run("GorpMigrations", testGorpMigrationsExists)
+	t.Run("Images", testImagesExists)
+	t.Run("InventoryItems", testInventoryItemsExists)
+	t.Run("InventoryLevels", testInventoryLevelsExists)
+	t.Run("Locations", testLocationsExists)
 	t.Run("Products", testProductsExists)
+	t.Run("ProductImages", testProductImagesExists)
+	t.Run("ProductOptions", testProductOptionsExists)
+	t.Run("ProductOptionValues", testProductOptionValuesExists)
+	t.Run("ProductTags", testProductTagsExists)
+	t.Run("ProductVariants", testProductVariantsExists)
+	t.Run("Tags", testTagsExists)
 }
 
 func TestFind(t *testing.T) {
+	t.Run("Collections", testCollectionsFind)
 	t.Run("GorpMigrations", testGorpMigrationsFind)
+	t.Run("Images", testImagesFind)
+	t.Run("InventoryItems", testInventoryItemsFind)
+	t.Run("InventoryLevels", testInventoryLevelsFind)
+	t.Run("Locations", testLocationsFind)
 	t.Run("Products", testProductsFind)
+	t.Run("ProductImages", testProductImagesFind)
+	t.Run("ProductOptions", testProductOptionsFind)
+	t.Run("ProductOptionValues", testProductOptionValuesFind)
+	t.Run("ProductTags", testProductTagsFind)
+	t.Run("ProductVariants", testProductVariantsFind)
+	t.Run("Tags", testTagsFind)
 }
 
 func TestBind(t *testing.T) {
+	t.Run("Collections", testCollectionsBind)
 	t.Run("GorpMigrations", testGorpMigrationsBind)
+	t.Run("Images", testImagesBind)
+	t.Run("InventoryItems", testInventoryItemsBind)
+	t.Run("InventoryLevels", testInventoryLevelsBind)
+	t.Run("Locations", testLocationsBind)
 	t.Run("Products", testProductsBind)
+	t.Run("ProductImages", testProductImagesBind)
+	t.Run("ProductOptions", testProductOptionsBind)
+	t.Run("ProductOptionValues", testProductOptionValuesBind)
+	t.Run("ProductTags", testProductTagsBind)
+	t.Run("ProductVariants", testProductVariantsBind)
+	t.Run("Tags", testTagsBind)
 }
 
 func TestOne(t *testing.T) {
+	t.Run("Collections", testCollectionsOne)
 	t.Run("GorpMigrations", testGorpMigrationsOne)
+	t.Run("Images", testImagesOne)
+	t.Run("InventoryItems", testInventoryItemsOne)
+	t.Run("InventoryLevels", testInventoryLevelsOne)
+	t.Run("Locations", testLocationsOne)
 	t.Run("Products", testProductsOne)
+	t.Run("ProductImages", testProductImagesOne)
+	t.Run("ProductOptions", testProductOptionsOne)
+	t.Run("ProductOptionValues", testProductOptionValuesOne)
+	t.Run("ProductTags", testProductTagsOne)
+	t.Run("ProductVariants", testProductVariantsOne)
+	t.Run("Tags", testTagsOne)
 }
 
 func TestAll(t *testing.T) {
+	t.Run("Collections", testCollectionsAll)
 	t.Run("GorpMigrations", testGorpMigrationsAll)
+	t.Run("Images", testImagesAll)
+	t.Run("InventoryItems", testInventoryItemsAll)
+	t.Run("InventoryLevels", testInventoryLevelsAll)
+	t.Run("Locations", testLocationsAll)
 	t.Run("Products", testProductsAll)
+	t.Run("ProductImages", testProductImagesAll)
+	t.Run("ProductOptions", testProductOptionsAll)
+	t.Run("ProductOptionValues", testProductOptionValuesAll)
+	t.Run("ProductTags", testProductTagsAll)
+	t.Run("ProductVariants", testProductVariantsAll)
+	t.Run("Tags", testTagsAll)
 }
 
 func TestCount(t *testing.T) {
+	t.Run("Collections", testCollectionsCount)
 	t.Run("GorpMigrations", testGorpMigrationsCount)
+	t.Run("Images", testImagesCount)
+	t.Run("InventoryItems", testInventoryItemsCount)
+	t.Run("InventoryLevels", testInventoryLevelsCount)
+	t.Run("Locations", testLocationsCount)
 	t.Run("Products", testProductsCount)
+	t.Run("ProductImages", testProductImagesCount)
+	t.Run("ProductOptions", testProductOptionsCount)
+	t.Run("ProductOptionValues", testProductOptionValuesCount)
+	t.Run("ProductTags", testProductTagsCount)
+	t.Run("ProductVariants", testProductVariantsCount)
+	t.Run("Tags", testTagsCount)
 }
 
 func TestHooks(t *testing.T) {
+	t.Run("Collections", testCollectionsHooks)
 	t.Run("GorpMigrations", testGorpMigrationsHooks)
+	t.Run("Images", testImagesHooks)
+	t.Run("InventoryItems", testInventoryItemsHooks)
+	t.Run("InventoryLevels", testInventoryLevelsHooks)
+	t.Run("Locations", testLocationsHooks)
 	t.Run("Products", testProductsHooks)
+	t.Run("ProductImages", testProductImagesHooks)
+	t.Run("ProductOptions", testProductOptionsHooks)
+	t.Run("ProductOptionValues", testProductOptionValuesHooks)
+	t.Run("ProductTags", testProductTagsHooks)
+	t.Run("ProductVariants", testProductVariantsHooks)
+	t.Run("Tags", testTagsHooks)
 }
 
 func TestInsert(t *testing.T) {
+	t.Run("Collections", testCollectionsInsert)
+	t.Run("Collections", testCollectionsInsertWhitelist)
 	t.Run("GorpMigrations", testGorpMigrationsInsert)
 	t.Run("GorpMigrations", testGorpMigrationsInsertWhitelist)
+	t.Run("Images", testImagesInsert)
+	t.Run("Images", testImagesInsertWhitelist)
+	t.Run("InventoryItems", testInventoryItemsInsert)
+	t.Run("InventoryItems", testInventoryItemsInsertWhitelist)
+	t.Run("InventoryLevels", testInventoryLevelsInsert)
+	t.Run("InventoryLevels", testInventoryLevelsInsertWhitelist)
+	t.Run("Locations", testLocationsInsert)
+	t.Run("Locations", testLocationsInsertWhitelist)
 	t.Run("Products", testProductsInsert)
 	t.Run("Products", testProductsInsertWhitelist)
+	t.Run("ProductImages", testProductImagesInsert)
+	t.Run("ProductImages", testProductImagesInsertWhitelist)
+	t.Run("ProductOptions", testProductOptionsInsert)
+	t.Run("ProductOptions", testProductOptionsInsertWhitelist)
+	t.Run("ProductOptionValues", testProductOptionValuesInsert)
+	t.Run("ProductOptionValues", testProductOptionValuesInsertWhitelist)
+	t.Run("ProductTags", testProductTagsInsert)
+	t.Run("ProductTags", testProductTagsInsertWhitelist)
+	t.Run("ProductVariants", testProductVariantsInsert)
+	t.Run("ProductVariants", testProductVariantsInsertWhitelist)
+	t.Run("Tags", testTagsInsert)
+	t.Run("Tags", testTagsInsertWhitelist)
 }
 
 // TestToOne tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToOne(t *testing.T) {}
+func TestToOne(t *testing.T) {
+	t.Run("CollectionToImageUsingImage", testCollectionToOneImageUsingImage)
+	t.Run("InventoryLevelToInventoryItemUsingInventoryItem", testInventoryLevelToOneInventoryItemUsingInventoryItem)
+	t.Run("InventoryLevelToLocationUsingLocation", testInventoryLevelToOneLocationUsingLocation)
+	t.Run("ProductImageToProductUsingProduct", testProductImageToOneProductUsingProduct)
+	t.Run("ProductImageToImageUsingImage", testProductImageToOneImageUsingImage)
+	t.Run("ProductOptionToProductUsingProduct", testProductOptionToOneProductUsingProduct)
+	t.Run("ProductOptionValueToProductOptionUsingOption", testProductOptionValueToOneProductOptionUsingOption)
+	t.Run("ProductTagToTagUsingTag", testProductTagToOneTagUsingTag)
+	t.Run("ProductTagToProductUsingProduct", testProductTagToOneProductUsingProduct)
+	t.Run("ProductVariantToProductUsingProduct", testProductVariantToOneProductUsingProduct)
+	t.Run("ProductVariantToProductOptionValueUsingOption1Value", testProductVariantToOneProductOptionValueUsingOption1Value)
+	t.Run("ProductVariantToProductOptionValueUsingOption2Value", testProductVariantToOneProductOptionValueUsingOption2Value)
+	t.Run("ProductVariantToProductOptionValueUsingOption3Value", testProductVariantToOneProductOptionValueUsingOption3Value)
+	t.Run("ProductVariantToImageUsingImage", testProductVariantToOneImageUsingImage)
+	t.Run("ProductVariantToImageUsingInventoryItem", testProductVariantToOneImageUsingInventoryItem)
+}
 
 // TestOneToOne tests cannot be run in parallel
 // or deadlocks can occur.
-func TestOneToOne(t *testing.T) {}
+func TestOneToOne(t *testing.T) {
+	t.Run("ProductOptionToProductOptionValueUsingOptionProductOptionValue", testProductOptionOneToOneProductOptionValueUsingOptionProductOptionValue)
+}
 
 // TestToMany tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToMany(t *testing.T) {}
+func TestToMany(t *testing.T) {
+	t.Run("CollectionToProducts", testCollectionToManyProducts)
+	t.Run("ImageToCollections", testImageToManyCollections)
+	t.Run("ImageToProductImages", testImageToManyProductImages)
+	t.Run("ImageToProductVariants", testImageToManyProductVariants)
+	t.Run("ImageToInventoryItemProductVariants", testImageToManyInventoryItemProductVariants)
+	t.Run("InventoryItemToInventoryLevels", testInventoryItemToManyInventoryLevels)
+	t.Run("LocationToInventoryLevels", testLocationToManyInventoryLevels)
+	t.Run("ProductToCollections", testProductToManyCollections)
+	t.Run("ProductToProductImages", testProductToManyProductImages)
+	t.Run("ProductToProductOptions", testProductToManyProductOptions)
+	t.Run("ProductToProductTags", testProductToManyProductTags)
+	t.Run("ProductToProductVariants", testProductToManyProductVariants)
+	t.Run("ProductOptionValueToOption1ValueProductVariants", testProductOptionValueToManyOption1ValueProductVariants)
+	t.Run("ProductOptionValueToOption2ValueProductVariants", testProductOptionValueToManyOption2ValueProductVariants)
+	t.Run("ProductOptionValueToOption3ValueProductVariants", testProductOptionValueToManyOption3ValueProductVariants)
+	t.Run("TagToProductTags", testTagToManyProductTags)
+}
 
 // TestToOneSet tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToOneSet(t *testing.T) {}
+func TestToOneSet(t *testing.T) {
+	t.Run("CollectionToImageUsingCollections", testCollectionToOneSetOpImageUsingImage)
+	t.Run("InventoryLevelToInventoryItemUsingInventoryLevels", testInventoryLevelToOneSetOpInventoryItemUsingInventoryItem)
+	t.Run("InventoryLevelToLocationUsingInventoryLevels", testInventoryLevelToOneSetOpLocationUsingLocation)
+	t.Run("ProductImageToProductUsingProductImages", testProductImageToOneSetOpProductUsingProduct)
+	t.Run("ProductImageToImageUsingProductImages", testProductImageToOneSetOpImageUsingImage)
+	t.Run("ProductOptionToProductUsingProductOptions", testProductOptionToOneSetOpProductUsingProduct)
+	t.Run("ProductOptionValueToProductOptionUsingOptionProductOptionValue", testProductOptionValueToOneSetOpProductOptionUsingOption)
+	t.Run("ProductTagToTagUsingProductTags", testProductTagToOneSetOpTagUsingTag)
+	t.Run("ProductTagToProductUsingProductTags", testProductTagToOneSetOpProductUsingProduct)
+	t.Run("ProductVariantToProductUsingProductVariants", testProductVariantToOneSetOpProductUsingProduct)
+	t.Run("ProductVariantToProductOptionValueUsingOption1ValueProductVariants", testProductVariantToOneSetOpProductOptionValueUsingOption1Value)
+	t.Run("ProductVariantToProductOptionValueUsingOption2ValueProductVariants", testProductVariantToOneSetOpProductOptionValueUsingOption2Value)
+	t.Run("ProductVariantToProductOptionValueUsingOption3ValueProductVariants", testProductVariantToOneSetOpProductOptionValueUsingOption3Value)
+	t.Run("ProductVariantToImageUsingProductVariants", testProductVariantToOneSetOpImageUsingImage)
+	t.Run("ProductVariantToImageUsingInventoryItemProductVariants", testProductVariantToOneSetOpImageUsingInventoryItem)
+}
 
 // TestToOneRemove tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToOneRemove(t *testing.T) {}
+func TestToOneRemove(t *testing.T) {
+	t.Run("CollectionToImageUsingCollections", testCollectionToOneRemoveOpImageUsingImage)
+	t.Run("ProductOptionToProductUsingProductOptions", testProductOptionToOneRemoveOpProductUsingProduct)
+	t.Run("ProductVariantToProductUsingProductVariants", testProductVariantToOneRemoveOpProductUsingProduct)
+	t.Run("ProductVariantToProductOptionValueUsingOption1ValueProductVariants", testProductVariantToOneRemoveOpProductOptionValueUsingOption1Value)
+	t.Run("ProductVariantToProductOptionValueUsingOption2ValueProductVariants", testProductVariantToOneRemoveOpProductOptionValueUsingOption2Value)
+	t.Run("ProductVariantToProductOptionValueUsingOption3ValueProductVariants", testProductVariantToOneRemoveOpProductOptionValueUsingOption3Value)
+	t.Run("ProductVariantToImageUsingProductVariants", testProductVariantToOneRemoveOpImageUsingImage)
+	t.Run("ProductVariantToImageUsingInventoryItemProductVariants", testProductVariantToOneRemoveOpImageUsingInventoryItem)
+}
 
 // TestOneToOneSet tests cannot be run in parallel
 // or deadlocks can occur.
-func TestOneToOneSet(t *testing.T) {}
+func TestOneToOneSet(t *testing.T) {
+	t.Run("ProductOptionToProductOptionValueUsingOptionProductOptionValue", testProductOptionOneToOneSetOpProductOptionValueUsingOptionProductOptionValue)
+}
 
 // TestOneToOneRemove tests cannot be run in parallel
 // or deadlocks can occur.
@@ -103,37 +308,131 @@ func TestOneToOneRemove(t *testing.T) {}
 
 // TestToManyAdd tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToManyAdd(t *testing.T) {}
+func TestToManyAdd(t *testing.T) {
+	t.Run("CollectionToProducts", testCollectionToManyAddOpProducts)
+	t.Run("ImageToCollections", testImageToManyAddOpCollections)
+	t.Run("ImageToProductImages", testImageToManyAddOpProductImages)
+	t.Run("ImageToProductVariants", testImageToManyAddOpProductVariants)
+	t.Run("ImageToInventoryItemProductVariants", testImageToManyAddOpInventoryItemProductVariants)
+	t.Run("InventoryItemToInventoryLevels", testInventoryItemToManyAddOpInventoryLevels)
+	t.Run("LocationToInventoryLevels", testLocationToManyAddOpInventoryLevels)
+	t.Run("ProductToCollections", testProductToManyAddOpCollections)
+	t.Run("ProductToProductImages", testProductToManyAddOpProductImages)
+	t.Run("ProductToProductOptions", testProductToManyAddOpProductOptions)
+	t.Run("ProductToProductTags", testProductToManyAddOpProductTags)
+	t.Run("ProductToProductVariants", testProductToManyAddOpProductVariants)
+	t.Run("ProductOptionValueToOption1ValueProductVariants", testProductOptionValueToManyAddOpOption1ValueProductVariants)
+	t.Run("ProductOptionValueToOption2ValueProductVariants", testProductOptionValueToManyAddOpOption2ValueProductVariants)
+	t.Run("ProductOptionValueToOption3ValueProductVariants", testProductOptionValueToManyAddOpOption3ValueProductVariants)
+	t.Run("TagToProductTags", testTagToManyAddOpProductTags)
+}
 
 // TestToManySet tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToManySet(t *testing.T) {}
+func TestToManySet(t *testing.T) {
+	t.Run("CollectionToProducts", testCollectionToManySetOpProducts)
+	t.Run("ImageToCollections", testImageToManySetOpCollections)
+	t.Run("ImageToProductVariants", testImageToManySetOpProductVariants)
+	t.Run("ImageToInventoryItemProductVariants", testImageToManySetOpInventoryItemProductVariants)
+	t.Run("ProductToCollections", testProductToManySetOpCollections)
+	t.Run("ProductToProductOptions", testProductToManySetOpProductOptions)
+	t.Run("ProductToProductVariants", testProductToManySetOpProductVariants)
+	t.Run("ProductOptionValueToOption1ValueProductVariants", testProductOptionValueToManySetOpOption1ValueProductVariants)
+	t.Run("ProductOptionValueToOption2ValueProductVariants", testProductOptionValueToManySetOpOption2ValueProductVariants)
+	t.Run("ProductOptionValueToOption3ValueProductVariants", testProductOptionValueToManySetOpOption3ValueProductVariants)
+}
 
 // TestToManyRemove tests cannot be run in parallel
 // or deadlocks can occur.
-func TestToManyRemove(t *testing.T) {}
+func TestToManyRemove(t *testing.T) {
+	t.Run("CollectionToProducts", testCollectionToManyRemoveOpProducts)
+	t.Run("ImageToCollections", testImageToManyRemoveOpCollections)
+	t.Run("ImageToProductVariants", testImageToManyRemoveOpProductVariants)
+	t.Run("ImageToInventoryItemProductVariants", testImageToManyRemoveOpInventoryItemProductVariants)
+	t.Run("ProductToCollections", testProductToManyRemoveOpCollections)
+	t.Run("ProductToProductOptions", testProductToManyRemoveOpProductOptions)
+	t.Run("ProductToProductVariants", testProductToManyRemoveOpProductVariants)
+	t.Run("ProductOptionValueToOption1ValueProductVariants", testProductOptionValueToManyRemoveOpOption1ValueProductVariants)
+	t.Run("ProductOptionValueToOption2ValueProductVariants", testProductOptionValueToManyRemoveOpOption2ValueProductVariants)
+	t.Run("ProductOptionValueToOption3ValueProductVariants", testProductOptionValueToManyRemoveOpOption3ValueProductVariants)
+}
 
 func TestReload(t *testing.T) {
+	t.Run("Collections", testCollectionsReload)
 	t.Run("GorpMigrations", testGorpMigrationsReload)
+	t.Run("Images", testImagesReload)
+	t.Run("InventoryItems", testInventoryItemsReload)
+	t.Run("InventoryLevels", testInventoryLevelsReload)
+	t.Run("Locations", testLocationsReload)
 	t.Run("Products", testProductsReload)
+	t.Run("ProductImages", testProductImagesReload)
+	t.Run("ProductOptions", testProductOptionsReload)
+	t.Run("ProductOptionValues", testProductOptionValuesReload)
+	t.Run("ProductTags", testProductTagsReload)
+	t.Run("ProductVariants", testProductVariantsReload)
+	t.Run("Tags", testTagsReload)
 }
 
 func TestReloadAll(t *testing.T) {
+	t.Run("Collections", testCollectionsReloadAll)
 	t.Run("GorpMigrations", testGorpMigrationsReloadAll)
+	t.Run("Images", testImagesReloadAll)
+	t.Run("InventoryItems", testInventoryItemsReloadAll)
+	t.Run("InventoryLevels", testInventoryLevelsReloadAll)
+	t.Run("Locations", testLocationsReloadAll)
 	t.Run("Products", testProductsReloadAll)
+	t.Run("ProductImages", testProductImagesReloadAll)
+	t.Run("ProductOptions", testProductOptionsReloadAll)
+	t.Run("ProductOptionValues", testProductOptionValuesReloadAll)
+	t.Run("ProductTags", testProductTagsReloadAll)
+	t.Run("ProductVariants", testProductVariantsReloadAll)
+	t.Run("Tags", testTagsReloadAll)
 }
 
 func TestSelect(t *testing.T) {
+	t.Run("Collections", testCollectionsSelect)
 	t.Run("GorpMigrations", testGorpMigrationsSelect)
+	t.Run("Images", testImagesSelect)
+	t.Run("InventoryItems", testInventoryItemsSelect)
+	t.Run("InventoryLevels", testInventoryLevelsSelect)
+	t.Run("Locations", testLocationsSelect)
 	t.Run("Products", testProductsSelect)
+	t.Run("ProductImages", testProductImagesSelect)
+	t.Run("ProductOptions", testProductOptionsSelect)
+	t.Run("ProductOptionValues", testProductOptionValuesSelect)
+	t.Run("ProductTags", testProductTagsSelect)
+	t.Run("ProductVariants", testProductVariantsSelect)
+	t.Run("Tags", testTagsSelect)
 }
 
 func TestUpdate(t *testing.T) {
+	t.Run("Collections", testCollectionsUpdate)
 	t.Run("GorpMigrations", testGorpMigrationsUpdate)
+	t.Run("Images", testImagesUpdate)
+	t.Run("InventoryItems", testInventoryItemsUpdate)
+	t.Run("InventoryLevels", testInventoryLevelsUpdate)
+	t.Run("Locations", testLocationsUpdate)
 	t.Run("Products", testProductsUpdate)
+	t.Run("ProductImages", testProductImagesUpdate)
+	t.Run("ProductOptions", testProductOptionsUpdate)
+	t.Run("ProductOptionValues", testProductOptionValuesUpdate)
+	t.Run("ProductTags", testProductTagsUpdate)
+	t.Run("ProductVariants", testProductVariantsUpdate)
+	t.Run("Tags", testTagsUpdate)
 }
 
 func TestSliceUpdateAll(t *testing.T) {
+	t.Run("Collections", testCollectionsSliceUpdateAll)
 	t.Run("GorpMigrations", testGorpMigrationsSliceUpdateAll)
+	t.Run("Images", testImagesSliceUpdateAll)
+	t.Run("InventoryItems", testInventoryItemsSliceUpdateAll)
+	t.Run("InventoryLevels", testInventoryLevelsSliceUpdateAll)
+	t.Run("Locations", testLocationsSliceUpdateAll)
 	t.Run("Products", testProductsSliceUpdateAll)
+	t.Run("ProductImages", testProductImagesSliceUpdateAll)
+	t.Run("ProductOptions", testProductOptionsSliceUpdateAll)
+	t.Run("ProductOptionValues", testProductOptionValuesSliceUpdateAll)
+	t.Run("ProductTags", testProductTagsSliceUpdateAll)
+	t.Run("ProductVariants", testProductVariantsSliceUpdateAll)
+	t.Run("Tags", testTagsSliceUpdateAll)
 }

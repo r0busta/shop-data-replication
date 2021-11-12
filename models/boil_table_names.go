@@ -4,9 +4,33 @@
 package models
 
 var TableNames = struct {
-	GorpMigrations string
-	Product        string
+	Collection         string
+	CollectionProduct  string
+	GorpMigrations     string
+	Image              string
+	InventoryItem      string
+	InventoryLevel     string
+	Location           string
+	Product            string
+	ProductImage       string
+	ProductOption      string
+	ProductOptionValue string
+	ProductTag         string
+	ProductVariant     string
+	Tag                string
 }{
-	GorpMigrations: "gorp_migrations",
-	Product:        "product",
+	Collection:         "collection",
+	CollectionProduct:  "collection_product",
+	GorpMigrations:     "gorp_migrations",
+	Image:              "image",
+	InventoryItem:      "inventory_item",
+	InventoryLevel:     "inventory_level",
+	Location:           "location",
+	Product:            "product",
+	ProductImage:       "product_image",
+	ProductOption:      "product_option",
+	ProductOptionValue: "product_option_value",
+	ProductTag:         "product_tag",
+	ProductVariant:     "product_variant",
+	Tag:                "tag",
 }

@@ -21,24 +21,24 @@ var (
 	_ = queries.Equal
 )
 
-func testProducts(t *testing.T) {
+func testImages(t *testing.T) {
 	t.Parallel()
 
-	query := Products()
+	query := Images()
 
 	if query.Query == nil {
 		t.Error("expected a query, got nothing")
 	}
 }
 
-func testProductsDelete(t *testing.T) {
+func testImagesDelete(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -54,7 +54,7 @@ func testProductsDelete(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -64,14 +64,14 @@ func testProductsDelete(t *testing.T) {
 	}
 }
 
-func testProductsQueryDeleteAll(t *testing.T) {
+func testImagesQueryDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -81,13 +81,13 @@ func testProductsQueryDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	if rowsAff, err := Products().DeleteAll(ctx, tx); err != nil {
+	if rowsAff, err := Images().DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -97,14 +97,14 @@ func testProductsQueryDeleteAll(t *testing.T) {
 	}
 }
 
-func testProductsSliceDeleteAll(t *testing.T) {
+func testImagesSliceDeleteAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -114,7 +114,7 @@ func testProductsSliceDeleteAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := ProductSlice{o}
+	slice := ImageSlice{o}
 
 	if rowsAff, err := slice.DeleteAll(ctx, tx); err != nil {
 		t.Error(err)
@@ -122,7 +122,7 @@ func testProductsSliceDeleteAll(t *testing.T) {
 		t.Error("should only have deleted one row, but affected:", rowsAff)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -132,14 +132,14 @@ func testProductsSliceDeleteAll(t *testing.T) {
 	}
 }
 
-func testProductsExists(t *testing.T) {
+func testImagesExists(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -149,23 +149,23 @@ func testProductsExists(t *testing.T) {
 		t.Error(err)
 	}
 
-	e, err := ProductExists(ctx, tx, o.ID)
+	e, err := ImageExists(ctx, tx, o.ID)
 	if err != nil {
-		t.Errorf("Unable to check if Product exists: %s", err)
+		t.Errorf("Unable to check if Image exists: %s", err)
 	}
 	if !e {
-		t.Errorf("Expected ProductExists to return true, but got false.")
+		t.Errorf("Expected ImageExists to return true, but got false.")
 	}
 }
 
-func testProductsFind(t *testing.T) {
+func testImagesFind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -175,24 +175,24 @@ func testProductsFind(t *testing.T) {
 		t.Error(err)
 	}
 
-	productFound, err := FindProduct(ctx, tx, o.ID)
+	imageFound, err := FindImage(ctx, tx, o.ID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if productFound == nil {
+	if imageFound == nil {
 		t.Error("want a record, got nil")
 	}
 }
 
-func testProductsBind(t *testing.T) {
+func testImagesBind(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -202,19 +202,19 @@ func testProductsBind(t *testing.T) {
 		t.Error(err)
 	}
 
-	if err = Products().Bind(ctx, tx, o); err != nil {
+	if err = Images().Bind(ctx, tx, o); err != nil {
 		t.Error(err)
 	}
 }
 
-func testProductsOne(t *testing.T) {
+func testImagesOne(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -224,38 +224,38 @@ func testProductsOne(t *testing.T) {
 		t.Error(err)
 	}
 
-	if x, err := Products().One(ctx, tx); err != nil {
+	if x, err := Images().One(ctx, tx); err != nil {
 		t.Error(err)
 	} else if x == nil {
 		t.Error("expected to get a non nil record")
 	}
 }
 
-func testProductsAll(t *testing.T) {
+func testImagesAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	productOne := &Product{}
-	productTwo := &Product{}
-	if err = randomize.Struct(seed, productOne, productDBTypes, false, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	imageOne := &Image{}
+	imageTwo := &Image{}
+	if err = randomize.Struct(seed, imageOne, imageDBTypes, false, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
-	if err = randomize.Struct(seed, productTwo, productDBTypes, false, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, imageTwo, imageDBTypes, false, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = productOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = imageOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = productTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = imageTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	slice, err := Products().All(ctx, tx)
+	slice, err := Images().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -265,31 +265,31 @@ func testProductsAll(t *testing.T) {
 	}
 }
 
-func testProductsCount(t *testing.T) {
+func testImagesCount(t *testing.T) {
 	t.Parallel()
 
 	var err error
 	seed := randomize.NewSeed()
-	productOne := &Product{}
-	productTwo := &Product{}
-	if err = randomize.Struct(seed, productOne, productDBTypes, false, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	imageOne := &Image{}
+	imageTwo := &Image{}
+	if err = randomize.Struct(seed, imageOne, imageDBTypes, false, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
-	if err = randomize.Struct(seed, productTwo, productDBTypes, false, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, imageTwo, imageDBTypes, false, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = productOne.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = imageOne.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
-	if err = productTwo.Insert(ctx, tx, boil.Infer()); err != nil {
+	if err = imageTwo.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -299,155 +299,155 @@ func testProductsCount(t *testing.T) {
 	}
 }
 
-func productBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageBeforeInsertHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageAfterInsertHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageAfterSelectHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageBeforeUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageAfterUpdateHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageBeforeDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageAfterDeleteHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageBeforeUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func productAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Product) error {
-	*o = Product{}
+func imageAfterUpsertHook(ctx context.Context, e boil.ContextExecutor, o *Image) error {
+	*o = Image{}
 	return nil
 }
 
-func testProductsHooks(t *testing.T) {
+func testImagesHooks(t *testing.T) {
 	t.Parallel()
 
 	var err error
 
 	ctx := context.Background()
-	empty := &Product{}
-	o := &Product{}
+	empty := &Image{}
+	o := &Image{}
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, o, productDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize Product object: %s", err)
+	if err = randomize.Struct(seed, o, imageDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize Image object: %s", err)
 	}
 
-	AddProductHook(boil.BeforeInsertHook, productBeforeInsertHook)
+	AddImageHook(boil.BeforeInsertHook, imageBeforeInsertHook)
 	if err = o.doBeforeInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeInsertHook function to empty object, but got: %#v", o)
 	}
-	productBeforeInsertHooks = []ProductHook{}
+	imageBeforeInsertHooks = []ImageHook{}
 
-	AddProductHook(boil.AfterInsertHook, productAfterInsertHook)
+	AddImageHook(boil.AfterInsertHook, imageAfterInsertHook)
 	if err = o.doAfterInsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterInsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterInsertHook function to empty object, but got: %#v", o)
 	}
-	productAfterInsertHooks = []ProductHook{}
+	imageAfterInsertHooks = []ImageHook{}
 
-	AddProductHook(boil.AfterSelectHook, productAfterSelectHook)
+	AddImageHook(boil.AfterSelectHook, imageAfterSelectHook)
 	if err = o.doAfterSelectHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterSelectHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterSelectHook function to empty object, but got: %#v", o)
 	}
-	productAfterSelectHooks = []ProductHook{}
+	imageAfterSelectHooks = []ImageHook{}
 
-	AddProductHook(boil.BeforeUpdateHook, productBeforeUpdateHook)
+	AddImageHook(boil.BeforeUpdateHook, imageBeforeUpdateHook)
 	if err = o.doBeforeUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpdateHook function to empty object, but got: %#v", o)
 	}
-	productBeforeUpdateHooks = []ProductHook{}
+	imageBeforeUpdateHooks = []ImageHook{}
 
-	AddProductHook(boil.AfterUpdateHook, productAfterUpdateHook)
+	AddImageHook(boil.AfterUpdateHook, imageAfterUpdateHook)
 	if err = o.doAfterUpdateHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpdateHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpdateHook function to empty object, but got: %#v", o)
 	}
-	productAfterUpdateHooks = []ProductHook{}
+	imageAfterUpdateHooks = []ImageHook{}
 
-	AddProductHook(boil.BeforeDeleteHook, productBeforeDeleteHook)
+	AddImageHook(boil.BeforeDeleteHook, imageBeforeDeleteHook)
 	if err = o.doBeforeDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeDeleteHook function to empty object, but got: %#v", o)
 	}
-	productBeforeDeleteHooks = []ProductHook{}
+	imageBeforeDeleteHooks = []ImageHook{}
 
-	AddProductHook(boil.AfterDeleteHook, productAfterDeleteHook)
+	AddImageHook(boil.AfterDeleteHook, imageAfterDeleteHook)
 	if err = o.doAfterDeleteHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterDeleteHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterDeleteHook function to empty object, but got: %#v", o)
 	}
-	productAfterDeleteHooks = []ProductHook{}
+	imageAfterDeleteHooks = []ImageHook{}
 
-	AddProductHook(boil.BeforeUpsertHook, productBeforeUpsertHook)
+	AddImageHook(boil.BeforeUpsertHook, imageBeforeUpsertHook)
 	if err = o.doBeforeUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doBeforeUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected BeforeUpsertHook function to empty object, but got: %#v", o)
 	}
-	productBeforeUpsertHooks = []ProductHook{}
+	imageBeforeUpsertHooks = []ImageHook{}
 
-	AddProductHook(boil.AfterUpsertHook, productAfterUpsertHook)
+	AddImageHook(boil.AfterUpsertHook, imageAfterUpsertHook)
 	if err = o.doAfterUpsertHooks(ctx, nil); err != nil {
 		t.Errorf("Unable to execute doAfterUpsertHooks: %s", err)
 	}
 	if !reflect.DeepEqual(o, empty) {
 		t.Errorf("Expected AfterUpsertHook function to empty object, but got: %#v", o)
 	}
-	productAfterUpsertHooks = []ProductHook{}
+	imageAfterUpsertHooks = []ImageHook{}
 }
 
-func testProductsInsert(t *testing.T) {
+func testImagesInsert(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -457,7 +457,7 @@ func testProductsInsert(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -467,24 +467,24 @@ func testProductsInsert(t *testing.T) {
 	}
 }
 
-func testProductsInsertWhitelist(t *testing.T) {
+func testImagesInsertWhitelist(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
-	if err = o.Insert(ctx, tx, boil.Whitelist(productColumnsWithoutDefault...)); err != nil {
+	if err = o.Insert(ctx, tx, boil.Whitelist(imageColumnsWithoutDefault...)); err != nil {
 		t.Error(err)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -494,18 +494,18 @@ func testProductsInsertWhitelist(t *testing.T) {
 	}
 }
 
-func testProductToManyCollections(t *testing.T) {
+func testImageToManyCollections(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c Collection
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, &a, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
@@ -519,19 +519,12 @@ func testProductToManyCollections(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	queries.Assign(&b.ImageID, a.ID)
+	queries.Assign(&c.ImageID, a.ID)
 	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
 	}
 	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	_, err = tx.Exec("insert into `collection_product` (`product_id`, `collection_id`) values (?, ?)", a.ID, b.ID)
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = tx.Exec("insert into `collection_product` (`product_id`, `collection_id`) values (?, ?)", a.ID, c.ID)
-	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -542,10 +535,10 @@ func testProductToManyCollections(t *testing.T) {
 
 	bFound, cFound := false, false
 	for _, v := range check {
-		if v.ID == b.ID {
+		if queries.Equal(v.ImageID, b.ImageID) {
 			bFound = true
 		}
-		if v.ID == c.ID {
+		if queries.Equal(v.ImageID, c.ImageID) {
 			cFound = true
 		}
 	}
@@ -557,8 +550,8 @@ func testProductToManyCollections(t *testing.T) {
 		t.Error("expected to find c")
 	}
 
-	slice := ProductSlice{&a}
-	if err = a.L.LoadCollections(ctx, tx, false, (*[]*Product)(&slice), nil); err != nil {
+	slice := ImageSlice{&a}
+	if err = a.L.LoadCollections(ctx, tx, false, (*[]*Image)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
 	if got := len(a.R.Collections); got != 2 {
@@ -578,18 +571,18 @@ func testProductToManyCollections(t *testing.T) {
 	}
 }
 
-func testProductToManyProductImages(t *testing.T) {
+func testImageToManyProductImages(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c ProductImage
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, &a, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
@@ -603,8 +596,8 @@ func testProductToManyProductImages(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	b.ProductID = a.ID
-	c.ProductID = a.ID
+	b.ImageID = a.ID
+	c.ImageID = a.ID
 
 	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
@@ -620,10 +613,10 @@ func testProductToManyProductImages(t *testing.T) {
 
 	bFound, cFound := false, false
 	for _, v := range check {
-		if v.ProductID == b.ProductID {
+		if v.ImageID == b.ImageID {
 			bFound = true
 		}
-		if v.ProductID == c.ProductID {
+		if v.ImageID == c.ImageID {
 			cFound = true
 		}
 	}
@@ -635,8 +628,8 @@ func testProductToManyProductImages(t *testing.T) {
 		t.Error("expected to find c")
 	}
 
-	slice := ProductSlice{&a}
-	if err = a.L.LoadProductImages(ctx, tx, false, (*[]*Product)(&slice), nil); err != nil {
+	slice := ImageSlice{&a}
+	if err = a.L.LoadProductImages(ctx, tx, false, (*[]*Image)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
 	if got := len(a.R.ProductImages); got != 2 {
@@ -656,173 +649,18 @@ func testProductToManyProductImages(t *testing.T) {
 	}
 }
 
-func testProductToManyProductOptions(t *testing.T) {
+func testImageToManyProductVariants(t *testing.T) {
 	var err error
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
-	var b, c ProductOption
-
-	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
-	}
-
-	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	if err = randomize.Struct(seed, &b, productOptionDBTypes, false, productOptionColumnsWithDefault...); err != nil {
-		t.Fatal(err)
-	}
-	if err = randomize.Struct(seed, &c, productOptionDBTypes, false, productOptionColumnsWithDefault...); err != nil {
-		t.Fatal(err)
-	}
-
-	queries.Assign(&b.ProductID, a.ID)
-	queries.Assign(&c.ProductID, a.ID)
-	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	check, err := a.ProductOptions().All(ctx, tx)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	bFound, cFound := false, false
-	for _, v := range check {
-		if queries.Equal(v.ProductID, b.ProductID) {
-			bFound = true
-		}
-		if queries.Equal(v.ProductID, c.ProductID) {
-			cFound = true
-		}
-	}
-
-	if !bFound {
-		t.Error("expected to find b")
-	}
-	if !cFound {
-		t.Error("expected to find c")
-	}
-
-	slice := ProductSlice{&a}
-	if err = a.L.LoadProductOptions(ctx, tx, false, (*[]*Product)(&slice), nil); err != nil {
-		t.Fatal(err)
-	}
-	if got := len(a.R.ProductOptions); got != 2 {
-		t.Error("number of eager loaded records wrong, got:", got)
-	}
-
-	a.R.ProductOptions = nil
-	if err = a.L.LoadProductOptions(ctx, tx, true, &a, nil); err != nil {
-		t.Fatal(err)
-	}
-	if got := len(a.R.ProductOptions); got != 2 {
-		t.Error("number of eager loaded records wrong, got:", got)
-	}
-
-	if t.Failed() {
-		t.Logf("%#v", check)
-	}
-}
-
-func testProductToManyProductTags(t *testing.T) {
-	var err error
-	ctx := context.Background()
-	tx := MustTx(boil.BeginTx(ctx, nil))
-	defer func() { _ = tx.Rollback() }()
-
-	var a Product
-	var b, c ProductTag
-
-	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
-	}
-
-	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	if err = randomize.Struct(seed, &b, productTagDBTypes, false, productTagColumnsWithDefault...); err != nil {
-		t.Fatal(err)
-	}
-	if err = randomize.Struct(seed, &c, productTagDBTypes, false, productTagColumnsWithDefault...); err != nil {
-		t.Fatal(err)
-	}
-
-	b.ProductID = a.ID
-	c.ProductID = a.ID
-
-	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	check, err := a.ProductTags().All(ctx, tx)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	bFound, cFound := false, false
-	for _, v := range check {
-		if v.ProductID == b.ProductID {
-			bFound = true
-		}
-		if v.ProductID == c.ProductID {
-			cFound = true
-		}
-	}
-
-	if !bFound {
-		t.Error("expected to find b")
-	}
-	if !cFound {
-		t.Error("expected to find c")
-	}
-
-	slice := ProductSlice{&a}
-	if err = a.L.LoadProductTags(ctx, tx, false, (*[]*Product)(&slice), nil); err != nil {
-		t.Fatal(err)
-	}
-	if got := len(a.R.ProductTags); got != 2 {
-		t.Error("number of eager loaded records wrong, got:", got)
-	}
-
-	a.R.ProductTags = nil
-	if err = a.L.LoadProductTags(ctx, tx, true, &a, nil); err != nil {
-		t.Fatal(err)
-	}
-	if got := len(a.R.ProductTags); got != 2 {
-		t.Error("number of eager loaded records wrong, got:", got)
-	}
-
-	if t.Failed() {
-		t.Logf("%#v", check)
-	}
-}
-
-func testProductToManyProductVariants(t *testing.T) {
-	var err error
-	ctx := context.Background()
-	tx := MustTx(boil.BeginTx(ctx, nil))
-	defer func() { _ = tx.Rollback() }()
-
-	var a Product
+	var a Image
 	var b, c ProductVariant
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, &a, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
@@ -836,8 +674,8 @@ func testProductToManyProductVariants(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	queries.Assign(&b.ProductID, a.ID)
-	queries.Assign(&c.ProductID, a.ID)
+	queries.Assign(&b.ImageID, a.ID)
+	queries.Assign(&c.ImageID, a.ID)
 	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
 		t.Fatal(err)
 	}
@@ -852,10 +690,10 @@ func testProductToManyProductVariants(t *testing.T) {
 
 	bFound, cFound := false, false
 	for _, v := range check {
-		if queries.Equal(v.ProductID, b.ProductID) {
+		if queries.Equal(v.ImageID, b.ImageID) {
 			bFound = true
 		}
-		if queries.Equal(v.ProductID, c.ProductID) {
+		if queries.Equal(v.ImageID, c.ImageID) {
 			cFound = true
 		}
 	}
@@ -867,8 +705,8 @@ func testProductToManyProductVariants(t *testing.T) {
 		t.Error("expected to find c")
 	}
 
-	slice := ProductSlice{&a}
-	if err = a.L.LoadProductVariants(ctx, tx, false, (*[]*Product)(&slice), nil); err != nil {
+	slice := ImageSlice{&a}
+	if err = a.L.LoadProductVariants(ctx, tx, false, (*[]*Image)(&slice), nil); err != nil {
 		t.Fatal(err)
 	}
 	if got := len(a.R.ProductVariants); got != 2 {
@@ -888,18 +726,95 @@ func testProductToManyProductVariants(t *testing.T) {
 	}
 }
 
-func testProductToManyAddOpCollections(t *testing.T) {
+func testImageToManyInventoryItemProductVariants(t *testing.T) {
+	var err error
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Image
+	var b, c ProductVariant
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	if err = randomize.Struct(seed, &b, productVariantDBTypes, false, productVariantColumnsWithDefault...); err != nil {
+		t.Fatal(err)
+	}
+	if err = randomize.Struct(seed, &c, productVariantDBTypes, false, productVariantColumnsWithDefault...); err != nil {
+		t.Fatal(err)
+	}
+
+	queries.Assign(&b.InventoryItemID, a.ID)
+	queries.Assign(&c.InventoryItemID, a.ID)
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	check, err := a.InventoryItemProductVariants().All(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	bFound, cFound := false, false
+	for _, v := range check {
+		if queries.Equal(v.InventoryItemID, b.InventoryItemID) {
+			bFound = true
+		}
+		if queries.Equal(v.InventoryItemID, c.InventoryItemID) {
+			cFound = true
+		}
+	}
+
+	if !bFound {
+		t.Error("expected to find b")
+	}
+	if !cFound {
+		t.Error("expected to find c")
+	}
+
+	slice := ImageSlice{&a}
+	if err = a.L.LoadInventoryItemProductVariants(ctx, tx, false, (*[]*Image)(&slice), nil); err != nil {
+		t.Fatal(err)
+	}
+	if got := len(a.R.InventoryItemProductVariants); got != 2 {
+		t.Error("number of eager loaded records wrong, got:", got)
+	}
+
+	a.R.InventoryItemProductVariants = nil
+	if err = a.L.LoadInventoryItemProductVariants(ctx, tx, true, &a, nil); err != nil {
+		t.Fatal(err)
+	}
+	if got := len(a.R.InventoryItemProductVariants); got != 2 {
+		t.Error("number of eager loaded records wrong, got:", got)
+	}
+
+	if t.Failed() {
+		t.Logf("%#v", check)
+	}
+}
+
+func testImageToManyAddOpCollections(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c, d, e Collection
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*Collection{&b, &c, &d, &e}
@@ -933,11 +848,18 @@ func testProductToManyAddOpCollections(t *testing.T) {
 		first := x[0]
 		second := x[1]
 
-		if first.R.Products[0] != &a {
-			t.Error("relationship was not added properly to the slice")
+		if !queries.Equal(a.ID, first.ImageID) {
+			t.Error("foreign key was wrong value", a.ID, first.ImageID)
 		}
-		if second.R.Products[0] != &a {
-			t.Error("relationship was not added properly to the slice")
+		if !queries.Equal(a.ID, second.ImageID) {
+			t.Error("foreign key was wrong value", a.ID, second.ImageID)
+		}
+
+		if first.R.Image != &a {
+			t.Error("relationship was not added properly to the foreign slice")
+		}
+		if second.R.Image != &a {
+			t.Error("relationship was not added properly to the foreign slice")
 		}
 
 		if a.R.Collections[i*2] != first {
@@ -957,18 +879,18 @@ func testProductToManyAddOpCollections(t *testing.T) {
 	}
 }
 
-func testProductToManySetOpCollections(t *testing.T) {
+func testImageToManySetOpCollections(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c, d, e Collection
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*Collection{&b, &c, &d, &e}
@@ -1014,21 +936,30 @@ func testProductToManySetOpCollections(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	// The following checks cannot be implemented since we have no handle
-	// to these when we call Set(). Leaving them here as wishful thinking
-	// and to let people know there's dragons.
-	//
-	// if len(b.R.Products) != 0 {
-	// 	t.Error("relationship was not removed properly from the slice")
-	// }
-	// if len(c.R.Products) != 0 {
-	// 	t.Error("relationship was not removed properly from the slice")
-	// }
-	if d.R.Products[0] != &a {
-		t.Error("relationship was not added properly to the slice")
+	if !queries.IsValuerNil(b.ImageID) {
+		t.Error("want b's foreign key value to be nil")
 	}
-	if e.R.Products[0] != &a {
-		t.Error("relationship was not added properly to the slice")
+	if !queries.IsValuerNil(c.ImageID) {
+		t.Error("want c's foreign key value to be nil")
+	}
+	if !queries.Equal(a.ID, d.ImageID) {
+		t.Error("foreign key was wrong value", a.ID, d.ImageID)
+	}
+	if !queries.Equal(a.ID, e.ImageID) {
+		t.Error("foreign key was wrong value", a.ID, e.ImageID)
+	}
+
+	if b.R.Image != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
+	}
+	if c.R.Image != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
+	}
+	if d.R.Image != &a {
+		t.Error("relationship was not added properly to the foreign struct")
+	}
+	if e.R.Image != &a {
+		t.Error("relationship was not added properly to the foreign struct")
 	}
 
 	if a.R.Collections[0] != &d {
@@ -1039,18 +970,18 @@ func testProductToManySetOpCollections(t *testing.T) {
 	}
 }
 
-func testProductToManyRemoveOpCollections(t *testing.T) {
+func testImageToManyRemoveOpCollections(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c, d, e Collection
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*Collection{&b, &c, &d, &e}
@@ -1090,17 +1021,24 @@ func testProductToManyRemoveOpCollections(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	if len(b.R.Products) != 0 {
-		t.Error("relationship was not removed properly from the slice")
+	if !queries.IsValuerNil(b.ImageID) {
+		t.Error("want b's foreign key value to be nil")
 	}
-	if len(c.R.Products) != 0 {
-		t.Error("relationship was not removed properly from the slice")
+	if !queries.IsValuerNil(c.ImageID) {
+		t.Error("want c's foreign key value to be nil")
 	}
-	if d.R.Products[0] != &a {
-		t.Error("relationship was not added properly to the foreign struct")
+
+	if b.R.Image != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if e.R.Products[0] != &a {
-		t.Error("relationship was not added properly to the foreign struct")
+	if c.R.Image != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
+	}
+	if d.R.Image != &a {
+		t.Error("relationship to a should have been preserved")
+	}
+	if e.R.Image != &a {
+		t.Error("relationship to a should have been preserved")
 	}
 
 	if len(a.R.Collections) != 2 {
@@ -1116,18 +1054,18 @@ func testProductToManyRemoveOpCollections(t *testing.T) {
 	}
 }
 
-func testProductToManyAddOpProductImages(t *testing.T) {
+func testImageToManyAddOpProductImages(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c, d, e ProductImage
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*ProductImage{&b, &c, &d, &e}
@@ -1161,17 +1099,17 @@ func testProductToManyAddOpProductImages(t *testing.T) {
 		first := x[0]
 		second := x[1]
 
-		if a.ID != first.ProductID {
-			t.Error("foreign key was wrong value", a.ID, first.ProductID)
+		if a.ID != first.ImageID {
+			t.Error("foreign key was wrong value", a.ID, first.ImageID)
 		}
-		if a.ID != second.ProductID {
-			t.Error("foreign key was wrong value", a.ID, second.ProductID)
+		if a.ID != second.ImageID {
+			t.Error("foreign key was wrong value", a.ID, second.ImageID)
 		}
 
-		if first.R.Product != &a {
+		if first.R.Image != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
-		if second.R.Product != &a {
+		if second.R.Image != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
 
@@ -1191,344 +1129,18 @@ func testProductToManyAddOpProductImages(t *testing.T) {
 		}
 	}
 }
-func testProductToManyAddOpProductOptions(t *testing.T) {
+func testImageToManyAddOpProductVariants(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
-	var b, c, d, e ProductOption
-
-	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
-		t.Fatal(err)
-	}
-	foreigners := []*ProductOption{&b, &c, &d, &e}
-	for _, x := range foreigners {
-		if err = randomize.Struct(seed, x, productOptionDBTypes, false, strmangle.SetComplement(productOptionPrimaryKeyColumns, productOptionColumnsWithoutDefault)...); err != nil {
-			t.Fatal(err)
-		}
-	}
-
-	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	foreignersSplitByInsertion := [][]*ProductOption{
-		{&b, &c},
-		{&d, &e},
-	}
-
-	for i, x := range foreignersSplitByInsertion {
-		err = a.AddProductOptions(ctx, tx, i != 0, x...)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		first := x[0]
-		second := x[1]
-
-		if !queries.Equal(a.ID, first.ProductID) {
-			t.Error("foreign key was wrong value", a.ID, first.ProductID)
-		}
-		if !queries.Equal(a.ID, second.ProductID) {
-			t.Error("foreign key was wrong value", a.ID, second.ProductID)
-		}
-
-		if first.R.Product != &a {
-			t.Error("relationship was not added properly to the foreign slice")
-		}
-		if second.R.Product != &a {
-			t.Error("relationship was not added properly to the foreign slice")
-		}
-
-		if a.R.ProductOptions[i*2] != first {
-			t.Error("relationship struct slice not set to correct value")
-		}
-		if a.R.ProductOptions[i*2+1] != second {
-			t.Error("relationship struct slice not set to correct value")
-		}
-
-		count, err := a.ProductOptions().Count(ctx, tx)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if want := int64((i + 1) * 2); count != want {
-			t.Error("want", want, "got", count)
-		}
-	}
-}
-
-func testProductToManySetOpProductOptions(t *testing.T) {
-	var err error
-
-	ctx := context.Background()
-	tx := MustTx(boil.BeginTx(ctx, nil))
-	defer func() { _ = tx.Rollback() }()
-
-	var a Product
-	var b, c, d, e ProductOption
-
-	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
-		t.Fatal(err)
-	}
-	foreigners := []*ProductOption{&b, &c, &d, &e}
-	for _, x := range foreigners {
-		if err = randomize.Struct(seed, x, productOptionDBTypes, false, strmangle.SetComplement(productOptionPrimaryKeyColumns, productOptionColumnsWithoutDefault)...); err != nil {
-			t.Fatal(err)
-		}
-	}
-
-	if err = a.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	err = a.SetProductOptions(ctx, tx, false, &b, &c)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	count, err := a.ProductOptions().Count(ctx, tx)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if count != 2 {
-		t.Error("count was wrong:", count)
-	}
-
-	err = a.SetProductOptions(ctx, tx, true, &d, &e)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	count, err = a.ProductOptions().Count(ctx, tx)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if count != 2 {
-		t.Error("count was wrong:", count)
-	}
-
-	if !queries.IsValuerNil(b.ProductID) {
-		t.Error("want b's foreign key value to be nil")
-	}
-	if !queries.IsValuerNil(c.ProductID) {
-		t.Error("want c's foreign key value to be nil")
-	}
-	if !queries.Equal(a.ID, d.ProductID) {
-		t.Error("foreign key was wrong value", a.ID, d.ProductID)
-	}
-	if !queries.Equal(a.ID, e.ProductID) {
-		t.Error("foreign key was wrong value", a.ID, e.ProductID)
-	}
-
-	if b.R.Product != nil {
-		t.Error("relationship was not removed properly from the foreign struct")
-	}
-	if c.R.Product != nil {
-		t.Error("relationship was not removed properly from the foreign struct")
-	}
-	if d.R.Product != &a {
-		t.Error("relationship was not added properly to the foreign struct")
-	}
-	if e.R.Product != &a {
-		t.Error("relationship was not added properly to the foreign struct")
-	}
-
-	if a.R.ProductOptions[0] != &d {
-		t.Error("relationship struct slice not set to correct value")
-	}
-	if a.R.ProductOptions[1] != &e {
-		t.Error("relationship struct slice not set to correct value")
-	}
-}
-
-func testProductToManyRemoveOpProductOptions(t *testing.T) {
-	var err error
-
-	ctx := context.Background()
-	tx := MustTx(boil.BeginTx(ctx, nil))
-	defer func() { _ = tx.Rollback() }()
-
-	var a Product
-	var b, c, d, e ProductOption
-
-	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
-		t.Fatal(err)
-	}
-	foreigners := []*ProductOption{&b, &c, &d, &e}
-	for _, x := range foreigners {
-		if err = randomize.Struct(seed, x, productOptionDBTypes, false, strmangle.SetComplement(productOptionPrimaryKeyColumns, productOptionColumnsWithoutDefault)...); err != nil {
-			t.Fatal(err)
-		}
-	}
-
-	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	err = a.AddProductOptions(ctx, tx, true, foreigners...)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	count, err := a.ProductOptions().Count(ctx, tx)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if count != 4 {
-		t.Error("count was wrong:", count)
-	}
-
-	err = a.RemoveProductOptions(ctx, tx, foreigners[:2]...)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	count, err = a.ProductOptions().Count(ctx, tx)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if count != 2 {
-		t.Error("count was wrong:", count)
-	}
-
-	if !queries.IsValuerNil(b.ProductID) {
-		t.Error("want b's foreign key value to be nil")
-	}
-	if !queries.IsValuerNil(c.ProductID) {
-		t.Error("want c's foreign key value to be nil")
-	}
-
-	if b.R.Product != nil {
-		t.Error("relationship was not removed properly from the foreign struct")
-	}
-	if c.R.Product != nil {
-		t.Error("relationship was not removed properly from the foreign struct")
-	}
-	if d.R.Product != &a {
-		t.Error("relationship to a should have been preserved")
-	}
-	if e.R.Product != &a {
-		t.Error("relationship to a should have been preserved")
-	}
-
-	if len(a.R.ProductOptions) != 2 {
-		t.Error("should have preserved two relationships")
-	}
-
-	// Removal doesn't do a stable deletion for performance so we have to flip the order
-	if a.R.ProductOptions[1] != &d {
-		t.Error("relationship to d should have been preserved")
-	}
-	if a.R.ProductOptions[0] != &e {
-		t.Error("relationship to e should have been preserved")
-	}
-}
-
-func testProductToManyAddOpProductTags(t *testing.T) {
-	var err error
-
-	ctx := context.Background()
-	tx := MustTx(boil.BeginTx(ctx, nil))
-	defer func() { _ = tx.Rollback() }()
-
-	var a Product
-	var b, c, d, e ProductTag
-
-	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
-		t.Fatal(err)
-	}
-	foreigners := []*ProductTag{&b, &c, &d, &e}
-	for _, x := range foreigners {
-		if err = randomize.Struct(seed, x, productTagDBTypes, false, strmangle.SetComplement(productTagPrimaryKeyColumns, productTagColumnsWithoutDefault)...); err != nil {
-			t.Fatal(err)
-		}
-	}
-
-	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
-		t.Fatal(err)
-	}
-
-	foreignersSplitByInsertion := [][]*ProductTag{
-		{&b, &c},
-		{&d, &e},
-	}
-
-	for i, x := range foreignersSplitByInsertion {
-		err = a.AddProductTags(ctx, tx, i != 0, x...)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		first := x[0]
-		second := x[1]
-
-		if a.ID != first.ProductID {
-			t.Error("foreign key was wrong value", a.ID, first.ProductID)
-		}
-		if a.ID != second.ProductID {
-			t.Error("foreign key was wrong value", a.ID, second.ProductID)
-		}
-
-		if first.R.Product != &a {
-			t.Error("relationship was not added properly to the foreign slice")
-		}
-		if second.R.Product != &a {
-			t.Error("relationship was not added properly to the foreign slice")
-		}
-
-		if a.R.ProductTags[i*2] != first {
-			t.Error("relationship struct slice not set to correct value")
-		}
-		if a.R.ProductTags[i*2+1] != second {
-			t.Error("relationship struct slice not set to correct value")
-		}
-
-		count, err := a.ProductTags().Count(ctx, tx)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if want := int64((i + 1) * 2); count != want {
-			t.Error("want", want, "got", count)
-		}
-	}
-}
-func testProductToManyAddOpProductVariants(t *testing.T) {
-	var err error
-
-	ctx := context.Background()
-	tx := MustTx(boil.BeginTx(ctx, nil))
-	defer func() { _ = tx.Rollback() }()
-
-	var a Product
+	var a Image
 	var b, c, d, e ProductVariant
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*ProductVariant{&b, &c, &d, &e}
@@ -1562,17 +1174,17 @@ func testProductToManyAddOpProductVariants(t *testing.T) {
 		first := x[0]
 		second := x[1]
 
-		if !queries.Equal(a.ID, first.ProductID) {
-			t.Error("foreign key was wrong value", a.ID, first.ProductID)
+		if !queries.Equal(a.ID, first.ImageID) {
+			t.Error("foreign key was wrong value", a.ID, first.ImageID)
 		}
-		if !queries.Equal(a.ID, second.ProductID) {
-			t.Error("foreign key was wrong value", a.ID, second.ProductID)
+		if !queries.Equal(a.ID, second.ImageID) {
+			t.Error("foreign key was wrong value", a.ID, second.ImageID)
 		}
 
-		if first.R.Product != &a {
+		if first.R.Image != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
-		if second.R.Product != &a {
+		if second.R.Image != &a {
 			t.Error("relationship was not added properly to the foreign slice")
 		}
 
@@ -1593,18 +1205,18 @@ func testProductToManyAddOpProductVariants(t *testing.T) {
 	}
 }
 
-func testProductToManySetOpProductVariants(t *testing.T) {
+func testImageToManySetOpProductVariants(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c, d, e ProductVariant
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*ProductVariant{&b, &c, &d, &e}
@@ -1650,29 +1262,29 @@ func testProductToManySetOpProductVariants(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	if !queries.IsValuerNil(b.ProductID) {
+	if !queries.IsValuerNil(b.ImageID) {
 		t.Error("want b's foreign key value to be nil")
 	}
-	if !queries.IsValuerNil(c.ProductID) {
+	if !queries.IsValuerNil(c.ImageID) {
 		t.Error("want c's foreign key value to be nil")
 	}
-	if !queries.Equal(a.ID, d.ProductID) {
-		t.Error("foreign key was wrong value", a.ID, d.ProductID)
+	if !queries.Equal(a.ID, d.ImageID) {
+		t.Error("foreign key was wrong value", a.ID, d.ImageID)
 	}
-	if !queries.Equal(a.ID, e.ProductID) {
-		t.Error("foreign key was wrong value", a.ID, e.ProductID)
+	if !queries.Equal(a.ID, e.ImageID) {
+		t.Error("foreign key was wrong value", a.ID, e.ImageID)
 	}
 
-	if b.R.Product != nil {
+	if b.R.Image != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if c.R.Product != nil {
+	if c.R.Image != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if d.R.Product != &a {
+	if d.R.Image != &a {
 		t.Error("relationship was not added properly to the foreign struct")
 	}
-	if e.R.Product != &a {
+	if e.R.Image != &a {
 		t.Error("relationship was not added properly to the foreign struct")
 	}
 
@@ -1684,18 +1296,18 @@ func testProductToManySetOpProductVariants(t *testing.T) {
 	}
 }
 
-func testProductToManyRemoveOpProductVariants(t *testing.T) {
+func testImageToManyRemoveOpProductVariants(t *testing.T) {
 	var err error
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 
-	var a Product
+	var a Image
 	var b, c, d, e ProductVariant
 
 	seed := randomize.NewSeed()
-	if err = randomize.Struct(seed, &a, productDBTypes, false, strmangle.SetComplement(productPrimaryKeyColumns, productColumnsWithoutDefault)...); err != nil {
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
 		t.Fatal(err)
 	}
 	foreigners := []*ProductVariant{&b, &c, &d, &e}
@@ -1735,23 +1347,23 @@ func testProductToManyRemoveOpProductVariants(t *testing.T) {
 		t.Error("count was wrong:", count)
 	}
 
-	if !queries.IsValuerNil(b.ProductID) {
+	if !queries.IsValuerNil(b.ImageID) {
 		t.Error("want b's foreign key value to be nil")
 	}
-	if !queries.IsValuerNil(c.ProductID) {
+	if !queries.IsValuerNil(c.ImageID) {
 		t.Error("want c's foreign key value to be nil")
 	}
 
-	if b.R.Product != nil {
+	if b.R.Image != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if c.R.Product != nil {
+	if c.R.Image != nil {
 		t.Error("relationship was not removed properly from the foreign struct")
 	}
-	if d.R.Product != &a {
+	if d.R.Image != &a {
 		t.Error("relationship to a should have been preserved")
 	}
-	if e.R.Product != &a {
+	if e.R.Image != &a {
 		t.Error("relationship to a should have been preserved")
 	}
 
@@ -1768,14 +1380,265 @@ func testProductToManyRemoveOpProductVariants(t *testing.T) {
 	}
 }
 
-func testProductsReload(t *testing.T) {
+func testImageToManyAddOpInventoryItemProductVariants(t *testing.T) {
+	var err error
+
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Image
+	var b, c, d, e ProductVariant
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	foreigners := []*ProductVariant{&b, &c, &d, &e}
+	for _, x := range foreigners {
+		if err = randomize.Struct(seed, x, productVariantDBTypes, false, strmangle.SetComplement(productVariantPrimaryKeyColumns, productVariantColumnsWithoutDefault)...); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	foreignersSplitByInsertion := [][]*ProductVariant{
+		{&b, &c},
+		{&d, &e},
+	}
+
+	for i, x := range foreignersSplitByInsertion {
+		err = a.AddInventoryItemProductVariants(ctx, tx, i != 0, x...)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		first := x[0]
+		second := x[1]
+
+		if !queries.Equal(a.ID, first.InventoryItemID) {
+			t.Error("foreign key was wrong value", a.ID, first.InventoryItemID)
+		}
+		if !queries.Equal(a.ID, second.InventoryItemID) {
+			t.Error("foreign key was wrong value", a.ID, second.InventoryItemID)
+		}
+
+		if first.R.InventoryItem != &a {
+			t.Error("relationship was not added properly to the foreign slice")
+		}
+		if second.R.InventoryItem != &a {
+			t.Error("relationship was not added properly to the foreign slice")
+		}
+
+		if a.R.InventoryItemProductVariants[i*2] != first {
+			t.Error("relationship struct slice not set to correct value")
+		}
+		if a.R.InventoryItemProductVariants[i*2+1] != second {
+			t.Error("relationship struct slice not set to correct value")
+		}
+
+		count, err := a.InventoryItemProductVariants().Count(ctx, tx)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if want := int64((i + 1) * 2); count != want {
+			t.Error("want", want, "got", count)
+		}
+	}
+}
+
+func testImageToManySetOpInventoryItemProductVariants(t *testing.T) {
+	var err error
+
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Image
+	var b, c, d, e ProductVariant
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	foreigners := []*ProductVariant{&b, &c, &d, &e}
+	for _, x := range foreigners {
+		if err = randomize.Struct(seed, x, productVariantDBTypes, false, strmangle.SetComplement(productVariantPrimaryKeyColumns, productVariantColumnsWithoutDefault)...); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	if err = a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = b.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+	if err = c.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	err = a.SetInventoryItemProductVariants(ctx, tx, false, &b, &c)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	count, err := a.InventoryItemProductVariants().Count(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if count != 2 {
+		t.Error("count was wrong:", count)
+	}
+
+	err = a.SetInventoryItemProductVariants(ctx, tx, true, &d, &e)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	count, err = a.InventoryItemProductVariants().Count(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if count != 2 {
+		t.Error("count was wrong:", count)
+	}
+
+	if !queries.IsValuerNil(b.InventoryItemID) {
+		t.Error("want b's foreign key value to be nil")
+	}
+	if !queries.IsValuerNil(c.InventoryItemID) {
+		t.Error("want c's foreign key value to be nil")
+	}
+	if !queries.Equal(a.ID, d.InventoryItemID) {
+		t.Error("foreign key was wrong value", a.ID, d.InventoryItemID)
+	}
+	if !queries.Equal(a.ID, e.InventoryItemID) {
+		t.Error("foreign key was wrong value", a.ID, e.InventoryItemID)
+	}
+
+	if b.R.InventoryItem != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
+	}
+	if c.R.InventoryItem != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
+	}
+	if d.R.InventoryItem != &a {
+		t.Error("relationship was not added properly to the foreign struct")
+	}
+	if e.R.InventoryItem != &a {
+		t.Error("relationship was not added properly to the foreign struct")
+	}
+
+	if a.R.InventoryItemProductVariants[0] != &d {
+		t.Error("relationship struct slice not set to correct value")
+	}
+	if a.R.InventoryItemProductVariants[1] != &e {
+		t.Error("relationship struct slice not set to correct value")
+	}
+}
+
+func testImageToManyRemoveOpInventoryItemProductVariants(t *testing.T) {
+	var err error
+
+	ctx := context.Background()
+	tx := MustTx(boil.BeginTx(ctx, nil))
+	defer func() { _ = tx.Rollback() }()
+
+	var a Image
+	var b, c, d, e ProductVariant
+
+	seed := randomize.NewSeed()
+	if err = randomize.Struct(seed, &a, imageDBTypes, false, strmangle.SetComplement(imagePrimaryKeyColumns, imageColumnsWithoutDefault)...); err != nil {
+		t.Fatal(err)
+	}
+	foreigners := []*ProductVariant{&b, &c, &d, &e}
+	for _, x := range foreigners {
+		if err = randomize.Struct(seed, x, productVariantDBTypes, false, strmangle.SetComplement(productVariantPrimaryKeyColumns, productVariantColumnsWithoutDefault)...); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	if err := a.Insert(ctx, tx, boil.Infer()); err != nil {
+		t.Fatal(err)
+	}
+
+	err = a.AddInventoryItemProductVariants(ctx, tx, true, foreigners...)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	count, err := a.InventoryItemProductVariants().Count(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if count != 4 {
+		t.Error("count was wrong:", count)
+	}
+
+	err = a.RemoveInventoryItemProductVariants(ctx, tx, foreigners[:2]...)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	count, err = a.InventoryItemProductVariants().Count(ctx, tx)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if count != 2 {
+		t.Error("count was wrong:", count)
+	}
+
+	if !queries.IsValuerNil(b.InventoryItemID) {
+		t.Error("want b's foreign key value to be nil")
+	}
+	if !queries.IsValuerNil(c.InventoryItemID) {
+		t.Error("want c's foreign key value to be nil")
+	}
+
+	if b.R.InventoryItem != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
+	}
+	if c.R.InventoryItem != nil {
+		t.Error("relationship was not removed properly from the foreign struct")
+	}
+	if d.R.InventoryItem != &a {
+		t.Error("relationship to a should have been preserved")
+	}
+	if e.R.InventoryItem != &a {
+		t.Error("relationship to a should have been preserved")
+	}
+
+	if len(a.R.InventoryItemProductVariants) != 2 {
+		t.Error("should have preserved two relationships")
+	}
+
+	// Removal doesn't do a stable deletion for performance so we have to flip the order
+	if a.R.InventoryItemProductVariants[1] != &d {
+		t.Error("relationship to d should have been preserved")
+	}
+	if a.R.InventoryItemProductVariants[0] != &e {
+		t.Error("relationship to e should have been preserved")
+	}
+}
+
+func testImagesReload(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -1790,14 +1653,14 @@ func testProductsReload(t *testing.T) {
 	}
 }
 
-func testProductsReloadAll(t *testing.T) {
+func testImagesReloadAll(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -1807,21 +1670,21 @@ func testProductsReloadAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice := ProductSlice{o}
+	slice := ImageSlice{o}
 
 	if err = slice.ReloadAll(ctx, tx); err != nil {
 		t.Error(err)
 	}
 }
 
-func testProductsSelect(t *testing.T) {
+func testImagesSelect(t *testing.T) {
 	t.Parallel()
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -1831,7 +1694,7 @@ func testProductsSelect(t *testing.T) {
 		t.Error(err)
 	}
 
-	slice, err := Products().All(ctx, tx)
+	slice, err := Images().All(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1842,25 +1705,25 @@ func testProductsSelect(t *testing.T) {
 }
 
 var (
-	productDBTypes = map[string]string{`ID`: `bigint`, `BodyHTML`: `text`, `Title`: `varchar`, `Handle`: `varchar`, `ProductType`: `varchar`, `Vendor`: `varchar`, `CreatedAt`: `datetime`, `UpdatedAt`: `datetime`, `PublishedAt`: `datetime`, `PublishedScope`: `varchar`, `Status`: `tinyint`, `TemplateSuffix`: `varchar`}
-	_              = bytes.MinRead
+	imageDBTypes = map[string]string{`ID`: `bigint`, `CreatedAt`: `datetime`, `Height`: `int`, `SRC`: `varchar`, `UpdatedAt`: `datetime`, `Width`: `int`}
+	_            = bytes.MinRead
 )
 
-func testProductsUpdate(t *testing.T) {
+func testImagesUpdate(t *testing.T) {
 	t.Parallel()
 
-	if 0 == len(productPrimaryKeyColumns) {
+	if 0 == len(imagePrimaryKeyColumns) {
 		t.Skip("Skipping table with no primary key columns")
 	}
-	if len(productAllColumns) == len(productPrimaryKeyColumns) {
+	if len(imageAllColumns) == len(imagePrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -1870,7 +1733,7 @@ func testProductsUpdate(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1879,8 +1742,8 @@ func testProductsUpdate(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, productDBTypes, true, productPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imagePrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	if rowsAff, err := o.Update(ctx, tx, boil.Infer()); err != nil {
@@ -1890,18 +1753,18 @@ func testProductsUpdate(t *testing.T) {
 	}
 }
 
-func testProductsSliceUpdateAll(t *testing.T) {
+func testImagesSliceUpdateAll(t *testing.T) {
 	t.Parallel()
 
-	if len(productAllColumns) == len(productPrimaryKeyColumns) {
+	if len(imageAllColumns) == len(imagePrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
-	o := &Product{}
-	if err = randomize.Struct(seed, o, productDBTypes, true, productColumnsWithDefault...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := &Image{}
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imageColumnsWithDefault...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
@@ -1911,7 +1774,7 @@ func testProductsSliceUpdateAll(t *testing.T) {
 		t.Error(err)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1920,18 +1783,18 @@ func testProductsSliceUpdateAll(t *testing.T) {
 		t.Error("want one record, got:", count)
 	}
 
-	if err = randomize.Struct(seed, o, productDBTypes, true, productPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, o, imageDBTypes, true, imagePrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	// Remove Primary keys and unique columns from what we plan to update
 	var fields []string
-	if strmangle.StringSliceMatch(productAllColumns, productPrimaryKeyColumns) {
-		fields = productAllColumns
+	if strmangle.StringSliceMatch(imageAllColumns, imagePrimaryKeyColumns) {
+		fields = imageAllColumns
 	} else {
 		fields = strmangle.SetComplement(
-			productAllColumns,
-			productPrimaryKeyColumns,
+			imageAllColumns,
+			imagePrimaryKeyColumns,
 		)
 	}
 
@@ -1949,7 +1812,7 @@ func testProductsSliceUpdateAll(t *testing.T) {
 		}
 	}
 
-	slice := ProductSlice{o}
+	slice := ImageSlice{o}
 	if rowsAff, err := slice.UpdateAll(ctx, tx, updateMap); err != nil {
 		t.Error(err)
 	} else if rowsAff != 1 {
@@ -1957,32 +1820,32 @@ func testProductsSliceUpdateAll(t *testing.T) {
 	}
 }
 
-func testProductsUpsert(t *testing.T) {
+func testImagesUpsert(t *testing.T) {
 	t.Parallel()
 
-	if len(productAllColumns) == len(productPrimaryKeyColumns) {
+	if len(imageAllColumns) == len(imagePrimaryKeyColumns) {
 		t.Skip("Skipping table with only primary key columns")
 	}
-	if len(mySQLProductUniqueColumns) == 0 {
+	if len(mySQLImageUniqueColumns) == 0 {
 		t.Skip("Skipping table with no unique columns to conflict on")
 	}
 
 	seed := randomize.NewSeed()
 	var err error
 	// Attempt the INSERT side of an UPSERT
-	o := Product{}
-	if err = randomize.Struct(seed, &o, productDBTypes, false); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	o := Image{}
+	if err = randomize.Struct(seed, &o, imageDBTypes, false); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	ctx := context.Background()
 	tx := MustTx(boil.BeginTx(ctx, nil))
 	defer func() { _ = tx.Rollback() }()
 	if err = o.Upsert(ctx, tx, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Product: %s", err)
+		t.Errorf("Unable to upsert Image: %s", err)
 	}
 
-	count, err := Products().Count(ctx, tx)
+	count, err := Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
@@ -1991,15 +1854,15 @@ func testProductsUpsert(t *testing.T) {
 	}
 
 	// Attempt the UPDATE side of an UPSERT
-	if err = randomize.Struct(seed, &o, productDBTypes, false, productPrimaryKeyColumns...); err != nil {
-		t.Errorf("Unable to randomize Product struct: %s", err)
+	if err = randomize.Struct(seed, &o, imageDBTypes, false, imagePrimaryKeyColumns...); err != nil {
+		t.Errorf("Unable to randomize Image struct: %s", err)
 	}
 
 	if err = o.Upsert(ctx, tx, boil.Infer(), boil.Infer()); err != nil {
-		t.Errorf("Unable to upsert Product: %s", err)
+		t.Errorf("Unable to upsert Image: %s", err)
 	}
 
-	count, err = Products().Count(ctx, tx)
+	count, err = Images().Count(ctx, tx)
 	if err != nil {
 		t.Error(err)
 	}
