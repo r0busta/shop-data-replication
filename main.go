@@ -50,21 +50,23 @@ func main() {
 		log.Debugln("Data bootstrapped")
 	}
 
-	// Sync service
-	h := handler.NewDefaultHandler(db)
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
+	if os.Getenv("RUN_SYNC_SERVICE") != "" {
+		// Sync service
+		h := handler.NewDefaultHandler(db)
+		port := os.Getenv("PORT")
+		if port == "" {
+			port = "8080"
+		}
 
-	s := webhooks.New(h, webhooks.WithPort(port),
-		webhooks.WithShopifyApiSecret(os.Getenv("STORE_API_SECRET")),
-	)
+		s := webhooks.New(h, webhooks.WithPort(port),
+			webhooks.WithShopifyApiSecret(os.Getenv("STORE_API_SECRET")),
+		)
 
-	err = s.(*webhooks.Service).ProvisionSubscriptions(shopifyClient.GraphQLClient(), os.Getenv("STORE_WEBHOOKS_CALLBACK_HOST"))
-	if err != nil {
-		log.Fatalln(err)
+		err = s.(*webhooks.Service).ProvisionSubscriptions(shopifyClient.GraphQLClient(), os.Getenv("STORE_WEBHOOKS_CALLBACK_HOST"))
+		if err != nil {
+			log.Fatalln(err)
+		}
+		log.Debugln("Starting sync service")
+		log.Fatalln(s.Run())
 	}
-	log.Debugln("Starting sync service")
-	log.Fatalln(s.Run())
 }
