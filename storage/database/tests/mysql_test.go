@@ -1,17 +1,17 @@
-package tests
+package tests_test
 
 import (
 	"context"
 	"database/sql"
 
-	"github.com/r0busta/shop-data-replication/models"
-	"github.com/r0busta/shop-data-replication/storage/database"
-
 	_ "github.com/go-sql-driver/mysql"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/r0busta/shop-data-replication/models"
+	"github.com/r0busta/shop-data-replication/storage/database"
 	"github.com/volatiletech/null/v8"
 	"github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql/driver"
+	"github.com/volatiletech/sqlboiler/v4/queries"
 )
 
 var _ = Describe("Save products", func() {
@@ -44,7 +44,7 @@ var _ = Describe("Save products", func() {
 })
 
 var _ = Describe("Save product", func() {
-	It("inserts the new product into the database", func() {
+	It("inserts a new product into the database", func() {
 		product := &models.Product{
 			ID:    9876543210,
 			Title: null.StringFrom("Shopify Experts Coffee Mug"),
@@ -58,12 +58,13 @@ var _ = Describe("Save product", func() {
 		err = db.SaveProduct(product)
 		Expect(err).To(BeNil())
 
-		actual, err := models.Products().All(context.Background(), dbConn)
-		Expect(err).To(BeNil())
-		Expect(len(actual)).To(Equal(1))
+		want := models.Product{}
+		err = queries.Raw(`SELECT * from product`).Bind(context.Background(), dbConn, &want)
 
-		Expect(actual[0].ID).To(Equal(int64(9876543210)))
-		Expect(actual[0].Title.String).To(Equal("Shopify Experts Coffee Mug"))
+		Expect(err).To(BeNil())
+
+		Expect(want.ID).To(Equal(int64(9876543210)))
+		Expect(want.Title.String).To(Equal("Shopify Experts Coffee Mug"))
 	})
 
 	It("updates the existing product in the database", func() {
@@ -80,21 +81,18 @@ var _ = Describe("Save product", func() {
 		err = db.SaveProduct(product)
 		Expect(err).To(BeNil())
 
-		actual, err := models.Products().All(context.Background(), dbConn)
-		Expect(err).To(BeNil())
-		Expect(len(actual)).To(Equal(1))
-
 		// Update
 		product.Title = null.StringFrom("Shopify Experts Coffee Mug Large")
 		product.Vendor = null.StringFrom("Blackbird Commerce")
 		err = db.SaveProduct(product)
 		Expect(err).To(BeNil())
 
-		actual, err = models.Products().All(context.Background(), dbConn)
-		Expect(err).To(BeNil())
-		Expect(len(actual)).To(Equal(1))
+		want := models.Product{}
+		err = queries.Raw(`SELECT * from product`).Bind(context.Background(), dbConn, &want)
 
-		Expect(actual[0].ID).To(Equal(int64(9876543210)))
-		Expect(actual[0].Title.String).To(Equal("Shopify Experts Coffee Mug Large"))
+		Expect(err).To(BeNil())
+
+		Expect(want.ID).To(Equal(int64(9876543210)))
+		Expect(want.Title.String).To(Equal("Shopify Experts Coffee Mug Large"))
 	})
 })

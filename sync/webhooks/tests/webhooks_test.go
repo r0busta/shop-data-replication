@@ -1,4 +1,4 @@
-package tests
+package tests_test
 
 import (
 	"bytes"
@@ -8,15 +8,14 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/r0busta/shop-data-replication/handler"
-	"github.com/r0busta/shop-data-replication/models"
-	"github.com/r0busta/shop-data-replication/storage/database"
-	"github.com/r0busta/shop-data-replication/sync/webhooks"
-
 	_ "github.com/go-sql-driver/mysql"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	goshopify "github.com/r0busta/go-shopify/v3"
+	"github.com/r0busta/shop-data-replication/handler"
+	"github.com/r0busta/shop-data-replication/models"
+	"github.com/r0busta/shop-data-replication/storage/database"
+	"github.com/r0busta/shop-data-replication/sync/webhooks"
 	"github.com/volatiletech/sqlboiler/drivers/sqlboiler-mysql/driver"
 )
 

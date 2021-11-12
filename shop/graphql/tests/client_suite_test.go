@@ -1,5 +1,6 @@
-package tests
+package tests_test
 
+//go:generate mockgen -destination mock_v3/bulk_operation_service.go github.com/r0busta/go-shopify-graphql/v3 BulkOperationService
 import (
 	"testing"
 
@@ -18,8 +19,10 @@ const (
 	storeApi = "https://shop.myshopify.com/admin/api/2021-04/graphql.json"
 )
 
-var client shop.Client
-var mockBulkOperationService *mock_v3.MockBulkOperationService
+var (
+	client                   shop.Client
+	mockBulkOperationService *mock_v3.MockBulkOperationService
+)
 
 func TestGraphqlClient(t *testing.T) {
 	client = newMockGraphqlClient(t)

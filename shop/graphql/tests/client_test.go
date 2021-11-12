@@ -1,4 +1,4 @@
-package tests
+package tests_test
 
 import (
 	_ "github.com/go-sql-driver/mysql"
