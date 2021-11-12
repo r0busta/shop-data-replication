@@ -30,6 +30,7 @@ require (
 require (
 	github.com/alexflint/go-filemutex v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/ericlagergren/decimal v0.0.0-20211103172832-aca2edc11f73 // indirect
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
@@ -66,7 +67,7 @@ require (
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	golang.org/x/crypto v0.0.0-20211108221036-ceb1ce70b4fa // indirect
 	golang.org/x/net v0.0.0-20211111160137-58aab5ef257a // indirect
-	golang.org/x/sys v0.0.0-20211112143042-c6105e7cf70d // indirect
+	golang.org/x/sys v0.0.0-20211112164355-7580c6e521dc // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/tools v0.1.7 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
