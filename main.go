@@ -4,13 +4,12 @@ import (
 	"database/sql"
 	"os"
 
+	"github.com/joho/godotenv"
+	shopify "github.com/r0busta/go-shopify-graphql/v3"
 	graphqlShop "github.com/r0busta/shop-data-replication/shop/graphql"
 	"github.com/r0busta/shop-data-replication/storage/database"
 	"github.com/r0busta/shop-data-replication/sync/handler"
 	"github.com/r0busta/shop-data-replication/sync/webhooks"
-
-	"github.com/joho/godotenv"
-	shopify "github.com/r0busta/go-shopify-graphql/v3"
 	log "github.com/sirupsen/logrus"
 	"github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-mysql/driver"
 )
@@ -37,6 +36,7 @@ func main() {
 
 	if os.Getenv("PROVISION_DATA") != "" {
 		log.Debugln("Bootstraping the storage with initial shop data")
+
 		c := graphqlShop.New(shopifyClient)
 		products, err := c.ListAllProducts()
 		if err != nil {
@@ -47,6 +47,7 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
+
 		log.Debugln("Data bootstrapped")
 	}
 
@@ -67,6 +68,7 @@ func main() {
 		if err != nil {
 			log.Fatalln(err)
 		}
+
 		log.Debugln("Starting the sync service")
 		log.Fatalln(syncService.Run())
 	}

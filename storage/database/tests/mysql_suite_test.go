@@ -29,7 +29,7 @@ func prepareDatabase() dbcleaner.DbCleaner {
 		Dir: "../../../migrations/mysql",
 	}
 
-	queryString := driver.MySQLBuildQueryString("user", "password", "shop", "localhost", 3306, "false")
+	queryString := driver.MySQLBuildQueryString("user", "password", "test", "localhost", 3306, "false")
 	db, err := sql.Open("mysql", queryString)
 	if err != nil {
 		log.Fatalf("error opening database: %s", err)

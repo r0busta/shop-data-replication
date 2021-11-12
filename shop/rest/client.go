@@ -1,4 +1,4 @@
-package restShop
+package restshop
 
 import (
 	"log"
@@ -24,6 +24,7 @@ func New(restClient *rest.Client) shop.Client {
 
 func (c *Client) ListAllProducts() ([]*models.Product, error) {
 	opts := rest.ListOptions{Limit: maxRemoteListLimit}
+
 	products, pagination, err := c.client.Product.ListWithPagination(opts)
 	if err != nil {
 		log.Panicln(err)
@@ -31,11 +32,15 @@ func (c *Client) ListAllProducts() ([]*models.Product, error) {
 
 	for pagination.NextPageOptions != nil {
 		var p []rest.Product
+
 		opts.PageInfo = pagination.NextPageOptions.PageInfo
+
 		p, pagination, err = c.client.Product.ListWithPagination(opts)
 		if e, ok := err.(rest.RateLimitError); ok {
 			timeout := e.RetryAfter
+
 			log.Printf("Warning! Rate limit error. Retrying after %d seconds", timeout)
+
 			p, pagination, err = c.retryGetProductsPage(timeout, pagination.NextPageOptions.PageInfo)
 			if err != nil {
 				log.Panicln(err)
@@ -54,7 +59,9 @@ func (c *Client) ListAllProducts() ([]*models.Product, error) {
 
 func (c *Client) retryGetProductsPage(timeout int, pageInfo string) ([]rest.Product, *rest.Pagination, error) {
 	time.Sleep(time.Duration(timeout) * time.Second)
+
 	opts := rest.ListOptions{Limit: maxRemoteListLimit, PageInfo: pageInfo}
+
 	return c.client.Product.ListWithPagination(opts)
 }
 
@@ -66,5 +73,6 @@ func convertProductsResponse(products []rest.Product) ([]*models.Product, error)
 			Title: null.StringFrom(p.Title),
 		})
 	}
+
 	return res, nil
 }

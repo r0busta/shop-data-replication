@@ -12,6 +12,7 @@ On the startup, product data is, optionally, backfilled from Shopify to the data
 ## Getting started
 
 ```bash
+sqlboiler mysql
 docker-compose up
 sql-migrate up
 go test ./...

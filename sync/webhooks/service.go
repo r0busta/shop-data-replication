@@ -141,6 +141,7 @@ func (s *Service) onProductCreate(c *gin.Context) {
 
 func (s *Service) onProductUpdate(c *gin.Context) {
 	product := &goshopify.Product{}
+
 	err := c.ShouldBindJSON(product)
 	if err != nil {
 		c.AbortWithError(http.StatusBadRequest, err)
@@ -184,20 +185,22 @@ func VerifyRequest(req *http.Request, secret string) error {
 		return fmt.Errorf("received nil request body")
 	}
 
-	actual := []byte(req.Header.Get("X-Shopify-Hmac-Sha256"))
+	got := []byte(req.Header.Get("X-Shopify-Hmac-Sha256"))
 	mac := hmac.New(sha256.New, []byte(secret))
+
 	body, err := io.ReadAll(req.Body)
 	if err != nil {
 		return fmt.Errorf("error reading request body: %w", err)
 	}
+
 	req.Body = io.NopCloser(bytes.NewBuffer(body))
 
 	mac.Write(body)
-	expected := []byte(
+	want := []byte(
 		base64.StdEncoding.EncodeToString(mac.Sum(nil)),
 	)
 
-	if hmac.Equal(actual, expected) {
+	if hmac.Equal(got, want) {
 		return nil
 	}
 

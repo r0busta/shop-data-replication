@@ -30,11 +30,11 @@ var _ = Describe("On product create", func() {
 		err = h.OnProductCreate(product)
 		Expect(err).To(BeNil())
 
-		actual, err := models.Products().All(context.Background(), dbConn)
+		got, err := models.Products().All(context.Background(), dbConn)
 		Expect(err).To(BeNil())
-		Expect(len(actual)).To(Equal(1))
+		Expect(len(got)).To(Equal(1))
 
-		Expect(actual[0].ID).To(Equal(int64(9876543210)))
-		Expect(actual[0].Title.String).To(Equal("Shopify Experts Coffee Mug"))
+		Expect(got[0].ID).To(Equal(int64(9876543210)))
+		Expect(got[0].Title.String).To(Equal("Shopify Experts Coffee Mug"))
 	})
 })

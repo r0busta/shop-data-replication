@@ -45,29 +45,29 @@ var _ = Describe("Save products", func() {
 		err = db.SaveProducts(products)
 		Expect(err).To(BeNil())
 
-		actual, err := models.Products().All(context.Background(), dbConn)
+		got, err := models.Products().All(context.Background(), dbConn)
 		Expect(err).To(BeNil())
-		Expect(len(actual)).To(Equal(2))
+		Expect(len(got)).To(Equal(2))
 
-		Expect(actual[0].ID).To(Equal(int64(9876543210)))
-		Expect(actual[0].Title.String).To(Equal("Shopify Experts Coffee Mug"))
-		Expect(actual[0].BodyHTML.String).To(Equal("<p>Lorem ipsum dolor sit amet</p>"))
-		Expect(actual[0].Handle).To(Equal("shopify-experts-coffee-mug"))
-		Expect(actual[0].ProductType.String).To(Equal("Mug"))
-		Expect(actual[0].Vendor.String).To(Equal("Blackbird"))
-		Expect(actual[0].Status).To(Equal(int8(1)))
-		Expect(actual[0].PublishedScope).To(Equal("web"))
-		Expect(actual[0].TemplateSuffix.String).To(Equal(""))
+		Expect(got[0].ID).To(Equal(int64(9876543210)))
+		Expect(got[0].Title.String).To(Equal("Shopify Experts Coffee Mug"))
+		Expect(got[0].BodyHTML.String).To(Equal("<p>Lorem ipsum dolor sit amet</p>"))
+		Expect(got[0].Handle).To(Equal("shopify-experts-coffee-mug"))
+		Expect(got[0].ProductType.String).To(Equal("Mug"))
+		Expect(got[0].Vendor.String).To(Equal("Blackbird"))
+		Expect(got[0].Status).To(Equal(int8(1)))
+		Expect(got[0].PublishedScope).To(Equal("web"))
+		Expect(got[0].TemplateSuffix.String).To(Equal(""))
 
-		Expect(actual[1].ID).To(Equal(int64(9223372036854775807)))
-		Expect(actual[1].Title.String).To(Equal("Shopify Experts Hoodie"))
-		Expect(actual[1].BodyHTML.String).To(Equal("<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p><p>laudantium, totam rem aperiam, eaque ipsa quae ab.</p>"))
-		Expect(actual[1].Handle).To(Equal("shopify-experts-hoodie"))
-		Expect(actual[1].ProductType.String).To(Equal("Hoodie"))
-		Expect(actual[1].Vendor.String).To(Equal("Blackbird"))
-		Expect(actual[1].Status).To(Equal(int8(3)))
-		Expect(actual[1].PublishedScope).To(Equal("global"))
-		Expect(actual[1].TemplateSuffix.String).To(Equal("custom"))
+		Expect(got[1].ID).To(Equal(int64(9223372036854775807)))
+		Expect(got[1].Title.String).To(Equal("Shopify Experts Hoodie"))
+		Expect(got[1].BodyHTML.String).To(Equal("<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.</p><p>laudantium, totam rem aperiam, eaque ipsa quae ab.</p>"))
+		Expect(got[1].Handle).To(Equal("shopify-experts-hoodie"))
+		Expect(got[1].ProductType.String).To(Equal("Hoodie"))
+		Expect(got[1].Vendor.String).To(Equal("Blackbird"))
+		Expect(got[1].Status).To(Equal(int8(3)))
+		Expect(got[1].PublishedScope).To(Equal("global"))
+		Expect(got[1].TemplateSuffix.String).To(Equal("custom"))
 	})
 })
 
@@ -87,7 +87,7 @@ var _ = Describe("Save product", func() {
 		Expect(err).To(BeNil())
 
 		want := models.Product{}
-		err = queries.Raw(`SELECT * from product`).Bind(context.Background(), dbConn, &want)
+		err = queries.Raw(`select * from product`).Bind(context.Background(), dbConn, &want)
 
 		Expect(err).To(BeNil())
 
@@ -116,7 +116,7 @@ var _ = Describe("Save product", func() {
 		Expect(err).To(BeNil())
 
 		want := models.Product{}
-		err = queries.Raw(`SELECT * from product`).Bind(context.Background(), dbConn, &want)
+		err = queries.Raw(`select * from product`).Bind(context.Background(), dbConn, &want)
 
 		Expect(err).To(BeNil())
 
