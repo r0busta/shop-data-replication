@@ -12,7 +12,7 @@ CREATE TABLE order_line (
     quantity INT NOT NULL,
     price DECIMAL(13, 4) NOT NULL,
     total_discount DECIMAL(13, 4) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES order(id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES customer_order(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE SET NULL,
     FOREIGN KEY (variant_id) REFERENCES product_variant(id) ON DELETE SET NULL
 );

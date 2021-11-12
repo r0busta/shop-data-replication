@@ -1,7 +1,7 @@
 -- +migrate Up
 CREATE TABLE customer_address (
     id BIGINT NOT NULL PRIMARY KEY,
-    customer_id BIGINT NOT NOT NULL,
+    customer_id BIGINT NOT NULL,
     address1 VARCHAR(255),
     address2 VARCHAR(255),
     city VARCHAR(255),
@@ -16,13 +16,15 @@ CREATE TABLE customer_address (
     province VARCHAR(255),
     province_code VARCHAR(2),
     zip VARCHAR(255),
-    FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE
 );
+
 ALTER TABLE customer
-ADD COLUMN default_address_id BIGINT
-AFTER id,
-    ADD FOREIGN KEY (default_address_id) REFERENCES customer_address(id);
+    ADD COLUMN default_address_id BIGINT
+    AFTER id,
+        ADD FOREIGN KEY (default_address_id) REFERENCES customer_address(id);
+
 -- +migrate Down
-ALTER TABLE customer DROP FOREIGN KEY customer_ibfk_0,
+ALTER TABLE customer DROP FOREIGN KEY customer_ibfk_1,
     DROP COLUMN default_address_id;
 DROP TABLE customer_address;

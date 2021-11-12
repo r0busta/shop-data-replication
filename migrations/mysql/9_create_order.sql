@@ -1,5 +1,5 @@
 -- +migrate Up
-CREATE TABLE order (
+CREATE TABLE customer_order (
     id BIGINT NOT NULL PRIMARY KEY,
     order_number INT NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -19,4 +19,4 @@ CREATE TABLE order (
     closed_at DATETIME
 );
 -- +migrate Down
-DROP TABLE order;
+DROP TABLE customer_order;

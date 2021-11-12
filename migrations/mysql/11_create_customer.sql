@@ -15,7 +15,7 @@ CREATE TABLE customer (
     tax_exempt TINYINT(1) NOT NULL,
     total_spent DECIMAL(13, 4) NOT NULL,
     updated_at DATETIME NOT NULL,
-    verified_email TINYINT(1) NOT NULL,
+    verified_email TINYINT(1) NOT NULL
 );
 -- +migrate Down
 DROP TABLE customer;
